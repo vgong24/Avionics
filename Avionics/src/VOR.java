@@ -1,8 +1,13 @@
-
+/*
+ * Test Driver
+ * 
+ */
 public class VOR{
 	public static void main(String args[]){
 		
 		System.out.println("Hello World");
+		System.out.println("Welcome Aboard.");
+		System.out.println("Thank you for flying Juneau Airlines! :)");
 		//remoted test line
 	}
 	
