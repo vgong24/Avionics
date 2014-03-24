@@ -1,3 +1,8 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import javax.swing.*;
+import java.awt.*;
 /*
  * Test Driver
  * 
@@ -9,6 +14,15 @@ public class VOR{
 		System.out.println("Welcome Aboard.");
 		System.out.println("Thank you for flying Juneau Airlines! :)");
 		//remoted test line
+		Compass myCompass = new Compass();
+	    JFrame frame = new JFrame();
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    JPanel panel = new JPanel();
+	    panel.add(myCompass);
+	    panel.setVisible(true);
+	    frame.add(panel);
+	    frame.pack();
+	    frame.setVisible(true);
 	}
 	
 	//VOR ELEMENTS
