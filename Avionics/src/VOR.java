@@ -26,44 +26,63 @@ public class VOR{
 	    myCompass.paintComponent(g);
 	    */
 		System.out.println(isTo(299,22));
+		int obs = 50;
+		int radial = 90;
+		SimulatedRadio sr = new SimulatedRadio(radial,45, true);
+		VOR vor = new VOR(obs,sr);
+		obs = vor.getOBS();
+		SimulatedRadio radio = vor.getRadio();
+		radial = radio.getRadial();
+		System.out.println("VOR OBS pointing at: "+ obs + ", plane located at "+ radial+" degrees");
+		System.out.println("Direction: "+vor.direction(obs, radial));
 	}
 	
 	//VOR ELEMENTS
 	/* Sets the direction of where the VOR is pointing to
-	 * Gets degrees from the dial
+	 * Gets degrees from the OBS
 	 */
-	int degrees;
+	int obs;
 	
 	/* Where the object is relative to VOR
-	 * If the plane is on the opposite direction of the perpendicular sides of the degrees
-	 * Then it is 'to' else 'from'
 	 */
 	boolean isTo;
-	
-	//Coordinates of VOR
-	int[] coord;
-	
+	//radio
+	SimulatedRadio radio;
 	/**
 	 * Constructor
 	 */
 	public VOR(int OBSsetting, SimulatedRadio radio){
-		degrees = OBSsetting;
-		isTo = radio.getSignalStrength();
+		obs = OBSsetting;
+		isTo = isTo(obs,radio.getRadial());
+		this.radio = radio;
 		
+	}
+	//accessor
+	public int getOBS(){
+		return obs;
+	}
+	
+	public boolean getIsTo(){
+		return isTo;
+	}
+	public SimulatedRadio getRadio(){
+		return radio;
 	}
 	/**
 	 * Get the radio signal/dial from the plane
 	 * input is stored in VOR
 	 * @param degree
 	 */
-	public void radioDegree(int degree){
-		degrees = degree;
+	public void setOBS(int degree){
+		obs = degree;
 	}
+	
+	
 	/**
 	 * To check whether the radio is going to or from the VOR
 	 * returns true if it is going to the VOR, false if it is from
 	 */
-	public static boolean isTo(int obs, int radial){
+	private static boolean isTo(int obs, int radial){
 		if(obs <= 90){
 			//if between 0-obs + 90 or after obs-90 to 0
 			if((radial >= 0 && radial <= obs+90) || (radial >= ((obs - 90 + 360)%360))){
@@ -81,5 +100,11 @@ public class VOR{
 				return false;
 		}
 		return true;
+	}
+	public String direction(int obs,int radial){
+		if (isTo(obs, radial)){
+			return "To";
+		}
+		return "From";
 	}
 }
