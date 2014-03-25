@@ -64,24 +64,22 @@ public class VOR{
 	 * returns true if it is going to the VOR, false if it is from
 	 */
 	public static boolean isTo(int obs, int radial){
-		int front = obs;
-		int back = (obs + 180 + 360)%360;
 		if(obs <= 90){
 			//if between 0-obs + 90 or after obs-90 to 0
 			if((radial >= 0 && radial <= obs+90) || (radial >= ((obs - 90 + 360)%360))){
-				return true;
+				return false;
 			}
 		}// if obs is greater than 270
 		else if(obs>=270){
 			//if radial is 0 or greater than obs and less than 360 or between 1 and obs +90
 			if(((radial == 0 || radial >= obs) && radial <= 360) || (radial <= (obs + 90)%360)){
-				return true;
+				return false;
 			}
 			
 		}else{
 			if(radial>=obs-90 && radial<= obs+90)
-				return true;
+				return false;
 		}
-		return false;
+		return true;
 	}
 }
