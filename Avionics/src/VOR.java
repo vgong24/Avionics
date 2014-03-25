@@ -14,7 +14,7 @@ public class VOR{
 		System.out.println("Welcome Aboard.");
 		System.out.println("Thank you for flying Juneau Airlines! :)");
 		//remoted test line
-		Compass myCompass = new Compass();
+		/*Compass myCompass = new Compass();
 	    JFrame frame = new JFrame();
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    JPanel panel = new JPanel();
@@ -23,19 +23,18 @@ public class VOR{
 	    frame.add(panel);
 	    frame.pack();
 	    frame.setVisible(true);
+	    myCompass.paintComponent(g);
+	    */
+		System.out.println(isTo(299,22));
 	}
 	
 	//VOR ELEMENTS
-	/*
-	 * int degrees
-	 * Sets the direction of where the VOR is pointing to
+	/* Sets the direction of where the VOR is pointing to
 	 * Gets degrees from the dial
 	 */
 	int degrees;
 	
-	/*
-	 * boolean to/from
-	 * Where the object is relative to VOR
+	/* Where the object is relative to VOR
 	 * If the plane is on the opposite direction of the perpendicular sides of the degrees
 	 * Then it is 'to' else 'from'
 	 */
@@ -47,12 +46,10 @@ public class VOR{
 	/**
 	 * Constructor
 	 */
-	public VOR(int posx, int posy){
-		degrees = 0;
-		isTo = true;
-		coord = new int[2];
-		coord[0]= posx;
-		coord[1]= posy;
+	public VOR(int OBSsetting, SimulatedRadio radio){
+		degrees = OBSsetting;
+		isTo = radio.getSignalStrength();
+		
 	}
 	/**
 	 * Get the radio signal/dial from the plane
@@ -62,5 +59,29 @@ public class VOR{
 	public void radioDegree(int degree){
 		degrees = degree;
 	}
-	
+	/**
+	 * To check whether the radio is going to or from the VOR
+	 * returns true if it is going to the VOR, false if it is from
+	 */
+	public static boolean isTo(int obs, int radial){
+		int front = obs;
+		int back = (obs + 180 + 360)%360;
+		if(obs <= 90){
+			//if between 0-obs + 90 or after obs-90 to 0
+			if((radial >= 0 && radial <= obs+90) || (radial >= ((obs - 90 + 360)%360))){
+				return true;
+			}
+		}// if obs is greater than 270
+		else if(obs>=270){
+			//if radial is 0 or greater than obs and less than 360 or between 1 and obs +90
+			if(((radial == 0 || radial >= obs) && radial <= 360) || (radial <= (obs + 90)%360)){
+				return true;
+			}
+			
+		}else{
+			if(radial>=obs-90 && radial<= obs+90)
+				return true;
+		}
+		return false;
+	}
 }

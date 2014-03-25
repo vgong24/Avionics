@@ -26,9 +26,9 @@ public class Compass extends JPanel implements KeyListener {
     try {
       super.paintComponent(g);
       Graphics2D g2D = (Graphics2D) g;
-      BufferedImage image = ImageIO.read(new File("C:\\Users\\Alyssa\\Desktop\\VOR Project\\Compass.png"));
+      BufferedImage image = ImageIO.read(new File("Compass.png"));
       g2D.drawImage(image, 0, 0, this);
-      image = ImageIO.read(new File("C:\\Users\\Alyssa\\Desktop\\VOR Project\\obsIcon.png"));
+      image = ImageIO.read(new File("obsIcon.png"));
       double rad = Math.toRadians(OBSDegrees); 
       double w = image.getWidth() / 2; 
       double h = image.getHeight() / 2; 
@@ -36,7 +36,7 @@ public class Compass extends JPanel implements KeyListener {
       AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
       g2D.drawImage(op.filter(image, null), 15, 400, this);
     
-      image = ImageIO.read(new File("C:\\Users\\Alyssa\\Desktop\\VOR Project\\Directions.png"));
+      image = ImageIO.read(new File("Directions.png"));
       rad = Math.toRadians(dirDegrees); 
       w = image.getWidth() / 2; 
       h = image.getHeight() / 2; 
