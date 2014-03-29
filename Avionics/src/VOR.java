@@ -13,8 +13,10 @@ public class VOR{
 		System.out.println("Hello World");
 		System.out.println("Welcome Aboard.");
 		System.out.println("Thank you for flying Juneau Airlines! :)");
+		System.out.println("----------------------------------------");
 		//remoted test line
-		/*Compass myCompass = new Compass();
+		/*
+		Compass myCompass = new Compass();
 	    JFrame frame = new JFrame();
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    JPanel panel = new JPanel();
@@ -79,8 +81,8 @@ public class VOR{
 	
 	
 	/**
-	 * To check whether the radio is going to or from the VOR
-	 * returns true if it is going to the VOR, false if it is from
+	 * Checks whether the airplane radio is 'going to' or 'coming from' the VOR
+	 * returns 'true' if it is going to the VOR, 'false' if it is coming from the VOR
 	 */
 	private static boolean isTo(int obs, int radial){
 		if(obs <= 90){
