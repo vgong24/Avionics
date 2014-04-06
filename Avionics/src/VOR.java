@@ -25,7 +25,6 @@ public class VOR{
 	    frame.setVisible(true);
 	    myCompass.paintComponent(g);
 	    */
-		System.out.println(isTo(299,22));
 		int obs = 50;
 		int radial = 90;
 		SimulatedRadio sr = new SimulatedRadio(radial,45, true);
@@ -35,6 +34,9 @@ public class VOR{
 		radial = radio.getRadial();
 		System.out.println("VOR OBS pointing at: "+ obs + ", plane located at "+ radial+" degrees");
 		System.out.println("Direction: "+vor.direction(obs, radial));
+		VOR test = new VOR();
+		System.out.println(test.direction(200, 20));
+		System.out.print((90-90+360)%360);
 	}
 	
 	//VOR ELEMENTS
@@ -45,15 +47,18 @@ public class VOR{
 	
 	/* Where the object is relative to VOR
 	 */
-	boolean isTo;
+	String direction = "TO";
 	//radio
 	SimulatedRadio radio;
 	/**
 	 * Constructor
 	 */
+	public VOR(){
+		
+	}
 	public VOR(int OBSsetting, SimulatedRadio radio){
 		obs = OBSsetting;
-		isTo = isTo(obs,radio.getRadial());
+		direction = direction(obs,radio.getRadial());
 		this.radio = radio;
 		
 	}
@@ -62,8 +67,8 @@ public class VOR{
 		return obs;
 	}
 	
-	public boolean getIsTo(){
-		return isTo;
+	public String getDirection(){
+		return direction;
 	}
 	public SimulatedRadio getRadio(){
 		return radio;
@@ -82,7 +87,7 @@ public class VOR{
 	 * To check whether the radio is going to or from the VOR
 	 * returns true if it is going to the VOR, false if it is from
 	 */
-	private static boolean isTo(int obs, int radial){
+	/*private static boolean isTo(int obs, int radial){
 		if(obs <= 90){
 			//if between 0-obs + 90 or after obs-90 to 0
 			if((radial >= 0 && radial <= obs+90) || (radial >= ((obs - 90 + 360)%360))){
@@ -106,5 +111,37 @@ public class VOR{
 			return "To";
 		}
 		return "From";
+	}*/
+	//Edit direction method 
+	public String direction(int obs, int radial){
+		direction = "TO";
+		if(obs < 90){
+			//If radial equals the edge points of obs (+/- 90)
+			if((radial >= 0 && radial == obs+90) || (radial == ((obs - 90 + 360)%360))){
+				direction = "OFF";
+			}
+			//if between 0-obs + 90 or after obs-90 to 0
+			else if((radial >= 0 && radial < obs+90) || (radial > ((obs - 90 + 360)%360))){
+				direction = "FROM";
+			}
+		}// if obs is greater than 270
+		else if(obs>=270){
+			if((radial == obs-90) || (radial == (obs + 90)%360)){
+				direction = "OFF";
+			}
+			//if radial is 0 or greater than obs-90 and less than 360 or between 1 and obs +90
+			else if(((radial == 0 || radial >= obs-90) && radial <= 360) || (radial <= (obs + 90)%360)){
+				direction = "FROM";
+			}
+			
+		}else{
+			if(radial>obs-90 && radial< obs+90)
+				direction = "FROM";
+			else if(radial == obs-90 || radial == obs+90){
+				direction = "OFF";
+			}
+		}
+		return direction;
 	}
+	
 }
