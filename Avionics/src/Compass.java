@@ -25,17 +25,9 @@ public class Compass extends JPanel implements KeyListener {
   protected void paintComponent(Graphics g) {
     try {
       super.paintComponent(g);
-      //test if this executes
-      System.out.println("");
-      
       Graphics2D g2D = (Graphics2D) g;
-      //original code BufferedImage image = ImageIO.read(new File("Compass.png"));
-      BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Compass.png"));
-      //Test if it gets past
-      System.out.println("Passed1");
-      
+      BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Compass.png"));      
       g2D.drawImage(image, 0, 0, this);
-      //original image = ImageIO.read(new File("obsIcon.png"));
       image = ImageIO.read(getClass().getResourceAsStream("obsIcon.png"));
       
       double rad = Math.toRadians(OBSDegrees); 
@@ -44,8 +36,6 @@ public class Compass extends JPanel implements KeyListener {
       AffineTransform at = AffineTransform.getRotateInstance(rad, w, h); 
       AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
       g2D.drawImage(op.filter(image, null), 15, 400, this);
-    
-      //original code image = ImageIO.read(new File("Directions.png"));
       image = ImageIO.read(getClass().getResourceAsStream("Directions.png"));
       
       rad = Math.toRadians(dirDegrees); 
@@ -69,6 +59,14 @@ public class Compass extends JPanel implements KeyListener {
   public void keyPressed(KeyEvent e) {}
   public void keyReleased(KeyEvent e) {}
   public void keyTyped (KeyEvent e) {}
+  
+  public void rotateCompass(){
+	  
+  }
+  
+  public void rotateOBS(){
+	  
+  }
 }
     
  
