@@ -25,10 +25,19 @@ public class Compass extends JPanel implements KeyListener {
   protected void paintComponent(Graphics g) {
     try {
       super.paintComponent(g);
+      //test if this executes
+      System.out.println("");
+      
       Graphics2D g2D = (Graphics2D) g;
-      BufferedImage image = ImageIO.read(new File("Compass.png"));
+      //original code BufferedImage image = ImageIO.read(new File("Compass.png"));
+      BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Compass.png"));
+      //Test if it gets past
+      System.out.println("Passed1");
+      
       g2D.drawImage(image, 0, 0, this);
-      image = ImageIO.read(new File("obsIcon.png"));
+      //original image = ImageIO.read(new File("obsIcon.png"));
+      image = ImageIO.read(getClass().getResourceAsStream("obsIcon.png"));
+      
       double rad = Math.toRadians(OBSDegrees); 
       double w = image.getWidth() / 2; 
       double h = image.getHeight() / 2; 
@@ -36,7 +45,9 @@ public class Compass extends JPanel implements KeyListener {
       AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
       g2D.drawImage(op.filter(image, null), 15, 400, this);
     
-      image = ImageIO.read(new File("Directions.png"));
+      //original code image = ImageIO.read(new File("Directions.png"));
+      image = ImageIO.read(getClass().getResourceAsStream("Directions.png"));
+      
       rad = Math.toRadians(dirDegrees); 
       w = image.getWidth() / 2; 
       h = image.getHeight() / 2; 
@@ -47,11 +58,14 @@ public class Compass extends JPanel implements KeyListener {
       requestFocusInWindow();
 
     } catch (Exception e) {
+    	System.out.println(e);
     }
+    
 
 //**********************
 //need to at least do the needle still
   } 
+  
   public void keyPressed(KeyEvent e) {}
   public void keyReleased(KeyEvent e) {}
   public void keyTyped (KeyEvent e) {}

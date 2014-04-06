@@ -13,20 +13,7 @@ public class VOR{
 		System.out.println("Hello World");
 		System.out.println("Welcome Aboard.");
 		System.out.println("Thank you for flying Juneau Airlines! :)");
-<<<<<<< HEAD
-		//remoted test line
-		/*Compass myCompass = new Compass();
-	    JFrame frame = new JFrame();
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    JPanel panel = new JPanel();
-	    panel.add(myCompass);
-	    panel.setVisible(true);
-	    frame.add(panel);
-	    frame.pack();
-	    frame.setVisible(true);
-	    myCompass.paintComponent(g);
-	    */
-=======
+
 		System.out.println("----------------------------------------");
 
 		Compass myCompass = new Compass();
@@ -39,8 +26,6 @@ public class VOR{
 	        frame.pack();
 	        frame.setVisible(true);
 
-		System.out.println(isTo(299,22));
->>>>>>> 3f9efcca483a18383ace9952aa92dc51b61dbde3
 		int obs = 50;
 		int radial = 90;
 		SimulatedRadio sr = new SimulatedRadio(radial,45, true);
