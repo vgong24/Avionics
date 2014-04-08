@@ -26,60 +26,35 @@ public class Compass extends JPanel implements KeyListener {
     try {
       super.paintComponent(g);
       Graphics2D g2D = (Graphics2D) g;
-<<<<<<< HEAD
       BufferedImage image = ImageIO.read(new File("C://Documents/GitHub/Avionics/Avionics/src/Compass.png"));
-=======
-      BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Compass.png"));      
->>>>>>> 6ccb8fc3c0c7f125ec43c9a7d623482ef79bbf89
       g2D.drawImage(image, 0, 0, this);
-      image = ImageIO.read(getClass().getResourceAsStream("obsIcon.png"));
-      
+      image = ImageIO.read(new File("obsIcon.png"));
       double rad = Math.toRadians(OBSDegrees); 
       double w = image.getWidth() / 2; 
       double h = image.getHeight() / 2; 
       AffineTransform at = AffineTransform.getRotateInstance(rad, w, h); 
       AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
       g2D.drawImage(op.filter(image, null), 15, 400, this);
-      
-      image = ImageIO.read(getClass().getResourceAsStream("Directions.png"));
+    
+      image = ImageIO.read(new File("Directions.png"));
       rad = Math.toRadians(dirDegrees); 
       w = image.getWidth() / 2; 
       h = image.getHeight() / 2; 
       at = AffineTransform.getRotateInstance(rad, w, h); 
       op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
       g2D.drawImage(op.filter(image, null), 0, 0, this);
-      
-      image = ImageIO.read(getClass().getResourceAsStream("Needle.png"));
-      rad = Math.toRadians(dirDegrees); 
-      w = image.getWidth() / 2; 
-      h = image.getHeight() / 2; 
-      at = AffineTransform.getRotateInstance(rad, w, h); 
-      op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
-      g2D.drawImage(op.filter(image, null), 0, 0, this);
-      
       setFocusable(true); 
       requestFocusInWindow();
 
     } catch (Exception e) {
-    	System.out.println(e);
     }
-    
 
 //**********************
 //need to at least do the needle still
   } 
-  
   public void keyPressed(KeyEvent e) {}
   public void keyReleased(KeyEvent e) {}
   public void keyTyped (KeyEvent e) {}
-  
-  public void rotateCompass(){
-	  
-  }
-  
-  public void rotateOBS(){
-	  
-  }
 }
     
  
