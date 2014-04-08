@@ -36,14 +36,23 @@ public class Compass extends JPanel implements KeyListener {
       AffineTransform at = AffineTransform.getRotateInstance(rad, w, h); 
       AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
       g2D.drawImage(op.filter(image, null), 15, 400, this);
-      image = ImageIO.read(getClass().getResourceAsStream("Directions.png"));
       
+      image = ImageIO.read(getClass().getResourceAsStream("Directions.png"));
       rad = Math.toRadians(dirDegrees); 
       w = image.getWidth() / 2; 
       h = image.getHeight() / 2; 
       at = AffineTransform.getRotateInstance(rad, w, h); 
       op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
       g2D.drawImage(op.filter(image, null), 0, 0, this);
+      
+      image = ImageIO.read(getClass().getResourceAsStream("Needle.png"));
+      rad = Math.toRadians(dirDegrees); 
+      w = image.getWidth() / 2; 
+      h = image.getHeight() / 2; 
+      at = AffineTransform.getRotateInstance(rad, w, h); 
+      op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
+      g2D.drawImage(op.filter(image, null), 0, 0, this);
+      
       setFocusable(true); 
       requestFocusInWindow();
 
