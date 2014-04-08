@@ -26,7 +26,7 @@ public class Compass extends JPanel implements KeyListener {
     try {
       super.paintComponent(g);
       Graphics2D g2D = (Graphics2D) g;
-      BufferedImage image = ImageIO.read(new File("Compass.png"));
+      BufferedImage image = ImageIO.read(new File("C://Documents/GitHub/Avionics/Avionics/src/Compass.png"));
       g2D.drawImage(image, 0, 0, this);
       image = ImageIO.read(new File("obsIcon.png"));
       double rad = Math.toRadians(OBSDegrees); 
