@@ -105,10 +105,12 @@ public class Compass extends JPanel implements KeyListener {
    * I think we just need 1 rotating method
    * By rotating the OBS it causes the both the OBS and compass to rotate
    * The needle changes based on the planes position according to the OBS direction
+   * 
+   * The direction should point according to what the vor.obs is pointing to
    * @param degrees
    */
   public void rotateOBS(int degrees){
-	  dirDegrees = dirDegrees - degrees;
+	  dirDegrees = 0 - degrees;
   }
   
   //move the picture to the side to see 

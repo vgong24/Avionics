@@ -26,11 +26,21 @@ public class VOR{
 	    frame.pack();
 	    frame.setVisible(true);
 	    //Rotate the compass by 90 degrees
-	    myCompass.rotateOBS(90);
+	    myCompass.rotateOBS(10);
 	    panel.add(myCompass);
 	    frame.add(panel);
 	   
-		//System.out.println(isTo(299,22));
+	    //create simulated radio
+	    SimulatedRadio radio = new SimulatedRadio(45, true);
+	    VOR vor = new VOR(100, radio);
+	    //we would have an eventListner to change the OBS 
+	    vor.rotateOBS(10);
+	    myCompass.rotateOBS(vor.getOBS());
+	    panel.add(myCompass);
+	    frame.add(panel);
+	    System.out.println(vor.getOBS());
+	    
+		/*System.out.println(isTo(299,22));
 		int obs = 50;
 		int radial = 90;
 		SimulatedRadio sr = new SimulatedRadio(radial,45, true);
@@ -43,6 +53,7 @@ public class VOR{
 		VOR test = new VOR();
 		System.out.println(test.direction(200, 20));
 		System.out.println((90-90+360)%360);
+		*/
 	}
 	
 	//VOR ELEMENTS
@@ -122,7 +133,9 @@ public class VOR{
 	 			}
 	 		}
 	 		return direction;
-		
-		
+	}
+	//If the obs changes
+	public void rotateOBS(int degrees){
+		obs = obs + degrees;
 	}
 }

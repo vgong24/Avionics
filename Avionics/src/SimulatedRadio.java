@@ -5,6 +5,7 @@ public class SimulatedRadio {
 	i.e., the plane is over the station or too far away to receive signal
 	 
 	*/
+	//radial is the degrees the plane is in relation to the VOR
 	int radial;
 	int stationID;
 	
@@ -15,6 +16,10 @@ public class SimulatedRadio {
 	public SimulatedRadio(int radial, int stationID, boolean signal){
 		this.radial = radial;
 		this.stationID = stationID;
+		this.signal = signal;
+	}
+	public SimulatedRadio(int radial, boolean signal){
+		this.radial = radial;
 		this.signal = signal;
 	}
 	
