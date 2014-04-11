@@ -16,6 +16,7 @@ public class VOR{
 		System.out.println("----------------------------------------");
 		//remoted test line
 		Compass myCompass = new Compass();
+		
 	    JFrame frame = new JFrame();
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    JPanel panel = new JPanel();
@@ -24,6 +25,10 @@ public class VOR{
 	    frame.add(panel);
 	    frame.pack();
 	    frame.setVisible(true);
+	    //Rotate the compass by 90 degrees
+	    myCompass.rotateOBS(90);
+	    panel.add(myCompass);
+	    frame.add(panel);
 	   
 		//System.out.println(isTo(299,22));
 		int obs = 50;
@@ -89,32 +94,6 @@ public class VOR{
 	 * Checks whether the airplane radio is 'going to' or 'coming from' the VOR
 	 * returns 'true' if it is going to the VOR, 'false' if it is coming from the VOR
 	 */
-/*	private static boolean isTo(int obs, int radial){
-		if(obs <= 90){
-			//if between 0-obs + 90 or after obs-90 to 0
-			if((radial >= 0 && radial <= obs+90) || (radial >= ((obs - 90 + 360)%360))){
-				return false;
-			}
-		}// if obs is greater than 270
-		else if(obs>=270){
-			//if radial is 0 or greater than obs and less than 360 or between 1 and obs +90
-			if(((radial == 0 || radial >= obs) && radial <= 360) || (radial <= (obs + 90)%360)){
-				return false;
-			}
-			
-		}else{
-			if(radial>=obs-90 && radial<= obs+90)
-				return false;
-		}
-		return true;
-	}
-	public String direction(int obs,int radial){
-		if (isTo(obs, radial)){
-			return "To";
-		}
-		return "From";
-		]
-	}*/
 		
 		//Edit direction method
 		public String direction(int obs, int radial){

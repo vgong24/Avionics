@@ -10,11 +10,38 @@ public class Compass extends JPanel implements KeyListener {
   double OBSDegrees;
   double dirDegrees;
   double needleDegrees;
+  /**
+   * Created global variable
+   * If we want to edit the images and place them back into the graphics
+   * Then we can use a method to rerender the compass with the edited images
+   */
+  Graphics2D graphics = null;
+  /**
+   * Image of the Compass
+   */
+  BufferedImage compassImg = null;
+  /**
+   * Image of OBS
+   */
+  BufferedImage obsImg = null;
+  /**
+   * Image of Direction
+   */
+  BufferedImage direct = null;
+  /**
+   * Image of needle
+   */
+  BufferedImage needle = null;
   
+  /**
+   * gets OBS degrees from the radio
+   * I thiiink the dirDegrees should match the OBS degrees or turn slower than when the OBS is spinning
+   * needleDegrees should be calculated from where the plan is relative to VOR
+   */
   public Compass() {
-    double OBSDegrees = 0;
-    double dirDegrees = 0;
-    double needleDegrees = 0;
+    OBSDegrees = 0;
+    dirDegrees = 0;
+    needleDegrees = 0;
     addKeyListener(this);
   }
 
@@ -25,39 +52,39 @@ public class Compass extends JPanel implements KeyListener {
   protected void paintComponent(Graphics g) {
     try {
       super.paintComponent(g);
-      Graphics2D g2D = (Graphics2D) g;
-      BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Compass.png"));      
+      graphics = (Graphics2D) g;
+      compassImg = ImageIO.read(getClass().getResourceAsStream("Compass.png"));      
       
-      g2D.drawImage(image, 0, 0, this);
-      image = ImageIO.read(getClass().getResourceAsStream("obsIcon.png"));
+      graphics.drawImage(compassImg, 0, 0, this);
+      obsImg = ImageIO.read(getClass().getResourceAsStream("obsIcon.png"));
       
       double rad = Math.toRadians(OBSDegrees); 
-      double w = image.getWidth() / 2; 
-      double h = image.getHeight() / 2; 
+      double w = obsImg.getWidth() / 2; 
+      double h = obsImg.getHeight() / 2; 
       
       AffineTransform at = AffineTransform.getRotateInstance(rad, w, h); 
       AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
-      g2D.drawImage(op.filter(image, null), 15, 400, this);
+      graphics.drawImage(op.filter(obsImg, null), 15, 400, this);
     
   
-      image = ImageIO.read(getClass().getResourceAsStream("Directions.png"));
+      direct = ImageIO.read(getClass().getResourceAsStream("Directions.png"));
       
       rad = Math.toRadians(dirDegrees); 
-      w = image.getWidth() / 2; 
-      h = image.getHeight() / 2; 
+      w = direct.getWidth() / 2; 
+      h = direct.getHeight() / 2; 
       at = AffineTransform.getRotateInstance(rad, w, h); 
       op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
-      g2D.drawImage(op.filter(image, null), 0, 0, this);
+      graphics.drawImage(op.filter(direct, null), 0, 0, this);
       
-      image = ImageIO.read(getClass().getResourceAsStream("Needle.png"));
+      needle = ImageIO.read(getClass().getResourceAsStream("Needle.png"));
 
       
-      rad = Math.toRadians(dirDegrees); 
-      w = image.getWidth() / 2; 
-      h = image.getHeight() / 2; 
+      rad = Math.toRadians(needleDegrees); 
+      w = needle.getWidth() / 2; 
+      h = needle.getHeight() / 2; 
       at = AffineTransform.getRotateInstance(rad, w, h); 
       op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
-      g2D.drawImage(op.filter(image, null), 0, 0, this);
+      graphics.drawImage(op.filter(needle, null), 0, 0, this);
      
       setFocusable(true); 
       requestFocusInWindow();
@@ -74,13 +101,18 @@ public class Compass extends JPanel implements KeyListener {
   public void keyReleased(KeyEvent e) {}
   public void keyTyped (KeyEvent e) {}
   
-  public void rotateCompass(){
-	  
+  /**
+   * I think we just need 1 rotating method
+   * By rotating the OBS it causes the both the OBS and compass to rotate
+   * The needle changes based on the planes position according to the OBS direction
+   * @param degrees
+   */
+  public void rotateOBS(int degrees){
+	  dirDegrees = dirDegrees - degrees;
   }
   
-  public void rotateOBS(){
-	  
-  }
+  //move the picture to the side to see 
+
   
 }
     
