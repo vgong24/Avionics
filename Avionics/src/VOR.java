@@ -165,13 +165,7 @@ public class VOR {
 	 * 
 	 * Things needed: obs, radial
 	 */
-	/*
-	 * public void rotateNeedle(){ int opposite = (obs + 180)%360; //if radial
-	 * == obs or obs +180 if(radial == obs || radial == opposite){ //set needle
-	 * to point down the middle } if(obs < 180){ if(radial > 180){ if(radial >
-	 * opposite){ //point right }else{ //point left } }else{ if(radial< obs){
-	 * //point left }else{ //point right } } } }
-	 */
+
 	/**
 	 * See if I can reuse the direction code for the needle logic
 	 */
