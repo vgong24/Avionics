@@ -40,5 +40,7 @@ public class SimulatedRadio {
 		then radial = 15 degrees*/
 		radial = (radial + change + 360) % 360;
 	}
-	
+	public void setRadial(int value){
+		radial = value;
+	}
 }

@@ -78,7 +78,6 @@ public class Compass extends JPanel implements KeyListener {
       
       needle = ImageIO.read(getClass().getResourceAsStream("Needle.png"));
 
-      
       rad = Math.toRadians(needleDegrees); 
       w = needle.getWidth() / 2; 
       h = needle.getHeight() / 2; 
@@ -111,6 +110,7 @@ public class Compass extends JPanel implements KeyListener {
    */
   public void rotateOBS(int degrees){
 	  dirDegrees = 0 - degrees;
+	  OBSDegrees = 0 - degrees;
   }
   
   //move the picture to the side to see 
