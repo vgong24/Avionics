@@ -16,6 +16,7 @@ public class VORTest {
 	@Test
 	public void testRadioDegree() {
 	}
+	@Test
 	public void testDirection() {
 		VOR tester = new VOR();
 		int obs = 200;
@@ -62,6 +63,7 @@ public class VORTest {
 	}
 	
 	//test needleDirection
+	@Test
 	public void testNeedleDirection(){
 		SimulatedRadio radio = new SimulatedRadio(45, true);
 		VOR tester = new VOR(90, radio);

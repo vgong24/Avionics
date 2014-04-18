@@ -112,6 +112,9 @@ public class Compass extends JPanel implements KeyListener {
 	  dirDegrees = 0 - degrees;
 	  OBSDegrees = 0 - degrees;
   }
+  public void rotateNeedle(int derees){
+	  
+  }
   
   //move the picture to the side to see 
 
