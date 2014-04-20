@@ -46,8 +46,8 @@ public class VOR {
 		System.out.println(vor.mod(-5,360));
 		
 	}
-
-	int mod(int a, int b){
+	//loops around 360 instead of getting negative numbers
+	private int mod(int a, int b){
 		int ret = a % b;
 		if(ret < 0){
 			ret+=b;

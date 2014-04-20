@@ -76,7 +76,7 @@ public class Compass extends JPanel implements KeyListener {
       op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR); 
       graphics.drawImage(op.filter(direct, null), 0, 0, this);
       
-      needle = ImageIO.read(getClass().getResourceAsStream("Needle.png"));
+      needle = ImageIO.read(getClass().getResourceAsStream("justNeedle.png"));
 
       rad = Math.toRadians(needleDegrees); 
       w = needle.getWidth() / 2; 
