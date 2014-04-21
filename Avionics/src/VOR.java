@@ -139,8 +139,7 @@ public class VOR {
 	public String direction(int obs, int radial) {
 		direction = "TO";
 		int obsLeft = mod(obs-90, 360);
-		int obsRight = mod(obs+90, 360);
-		
+		int obsRight = mod(obs+90, 360);	
 		if(radial == obsLeft || radial == obsRight){
 			direction = "OFF";
 		}else if(obs < 90 || obs >= 270){
@@ -184,13 +183,16 @@ public class VOR {
 			point = "Middle";
 			needle = 0;
 		}else if(obs_left_diff >= -10 && obs_left_diff <= 0){
-			needle = obs_left_diff * NEEDLE_RPD;
+			needle = obs_left_diff * NEEDLE_RPD * (-1);
+			System.out.println(needle);
 			point = "Right";
 		}else if(obs_right_diff <= 10 && obs_right_diff >= 0){
 			needle = obs_right_diff * NEEDLE_RPD * (-1);
 			point = "Left"; 
+			System.out.println(needle);
+
 		}else if(opp_left_diff >= -10 && opp_left_diff <= 0){//flip since we're doing the opposite side
-			needle = opp_left_diff * NEEDLE_RPD;
+			needle = opp_left_diff * NEEDLE_RPD * (-1);
 			point = "Right";
 		}else if(opp_right_diff <= 10 && opp_right_diff >= 0){
 			needle = opp_right_diff * NEEDLE_RPD * (-1);
@@ -213,7 +215,7 @@ public class VOR {
 				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD;
 			}else{
 				point = "Left";
-				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD;
+				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD * (-1);
 			}
 		}
 		return point;

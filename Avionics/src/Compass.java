@@ -60,7 +60,9 @@ public class Compass extends JPanel implements KeyListener {
 	protected void paintComponent(Graphics g) {
 		try {
 			super.paintComponent(g);
-			graphics = (Graphics2D) g;
+			final Graphics2D graphics = (Graphics2D)g.create();
+			//graphics = (Graphics2D) g;
+			
 			compassImg = ImageIO.read(getClass().getResourceAsStream(
 					"Compass.png"));
 
@@ -71,7 +73,9 @@ public class Compass extends JPanel implements KeyListener {
 			double rad = Math.toRadians(OBSDegrees);
 			double w = obsImg.getWidth() / 2;
 			double h = obsImg.getHeight() / 2;
-
+			
+			
+			
 			AffineTransform at = AffineTransform.getRotateInstance(rad, w, h);
 			AffineTransformOp op = new AffineTransformOp(at,
 					AffineTransformOp.TYPE_BILINEAR);
@@ -89,6 +93,7 @@ public class Compass extends JPanel implements KeyListener {
 
 			needle = ImageIO.read(getClass().getResourceAsStream(
 					"justNeedle.png"));
+		
 			
 			/**************** LOOOOOOOOOOOOOK HEEEEEEEEEERRRRRRRRRREEEEEEEEEEEEEEE******************
 			 * Something needs to be changed here in order to make 
@@ -101,17 +106,20 @@ public class Compass extends JPanel implements KeyListener {
 			 * edit: I think since the picture originally starts on the left corner
 			 * it will be cut off the window if you rotated it.
 			 */
+			
 			rad = Math.toRadians(needleDegrees);
-			w = needle.getWidth();
-			h = needle.getHeight();
-			double x = Math.cos(w) + Math.sin(h);
-			double y = Math.sin(0-w) + Math.cos(h);
-			at = AffineTransform.getRotateInstance(rad, x, y);
-			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-			int needlex = (compassImg.getWidth() / 2) - 5;
+			//We need to rotate at the top pivot point
+			w = needle.getWidth()/2;
+			h = needle.getHeight()/2;
+			at = AffineTransform.getRotateInstance(rad, w, h);
+			int needlex = (compassImg.getWidth() / 2);
 			int needley = compassImg.getHeight() / 4;
+			graphics.drawImage(needle, needlex, needley, this);
+			/* you can put it back in
+			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+			
 			graphics.drawImage(op.filter(needle, null), needlex, needley, this);
-
+			*/
 			setFocusable(true);
 			requestFocusInWindow();
 

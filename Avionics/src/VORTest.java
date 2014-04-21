@@ -131,6 +131,17 @@ public class VORTest {
 		assertEquals("direction of needle", "Left", tester.needleDirection());
 
 	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testGetNeedle(){
+		SimulatedRadio radio = new SimulatedRadio(45, true);
+		VOR tester = new VOR(90, radio);
+		tester.needleDirection();
+		assertEquals(0.0, tester.getNeedle(), 0.0);
+		
+		tester.setOR(180,0);
+	}
 
 	
 
