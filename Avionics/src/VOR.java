@@ -15,7 +15,19 @@ public class VOR {
 		System.out.println("Welcome Aboard.");
 		System.out.println("Thank you for flying Juneau Airlines! :)");
 		System.out.println("----------------------------------------");
-		// remoted test line
+		
+		/**************************************** Initial setup
+		 * 
+		 * Compass myCompass = new Compass();
+		 * JFrame frame = new JFrame();
+		 * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 * JPanel panel = new JPanel();
+		 * panel.add(myCompass);
+		 * panel.setVisible(true);
+		 * frame.add(panel);
+		 * frame.pack();
+		 * frame.setVisible(true);
+		 */
 		Compass myCompass = new Compass();
 
 		JFrame frame = new JFrame();
@@ -26,30 +38,29 @@ public class VOR {
 		frame.add(panel);
 		frame.pack();
 		frame.setVisible(true);
-		// Rotate the compass by 10 degrees
-		myCompass.rotateOBS(10);
-		panel.add(myCompass);
-		frame.add(panel);
-
+		
 		// create simulated radio TESTING STARTS HERE
 		SimulatedRadio radio = new SimulatedRadio(5, true);
 		VOR vor = new VOR(180, radio);
 		// we would have an eventListner to change the OBS
 		//vor.rotateOBS(-10);
-		vor.setOR(90, 0);
-		vor.needleDirection();
-		myCompass.rotateOBS(vor.getOBS());
-		myCompass.rotateNeedle(vor.getNeedle());
+		vor.setOR(0, 90);
+		myCompass.updateVariables(vor);
 		panel.add(myCompass);
 		frame.add(panel);
-		System.out.println("Any number between " + vor.getOBS()+ " and " + (vor.getOBS() + 180)%360 +" should point left");
-		System.out.println(vor.getRadial());
-		System.out.println(vor.needleDirection());
+		System.out.println("If radial is between " + (vor.getOBS() + 180)%360 + " and " + vor.getOBS() +" should point right");
+		System.out.println("Radial: "+vor.getRadial());
+		System.out.println("Needle should point "+vor.needleDirection());
 		System.out.println(vor.mod(-5,360));
 		
 	}
 	
-	
+	/**************************************************************************** Savior of time code
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	//loops around 360 instead of getting negative numbers
 	private int mod(int a, int b){
 		int ret = a % b;
@@ -104,7 +115,7 @@ public class VOR {
 
 	}
 
-	/************************************************************************** Accessors
+	/************************************************************************** Axssors
 	 * 
 	 * @return
 	 */
@@ -143,12 +154,12 @@ public class VOR {
 		radial = value;
 	}
 	//for testing purposes, set obs And radial
-	public void setOR(int degree, int value){
+	protected void setOR(int degree, int rad){
 		setOBS(degree);
-		setRadioRadial(value);
+		setRadioRadial(rad);
+		needleDirection();
 	}
 
-	// Mutator methods
 	// Change the radial from the radio, then update the radial for this class
 	public void updateRadial(int degrees) {
 		radio.updateRadial(degrees);
@@ -222,7 +233,6 @@ public class VOR {
 			point = "Right";
 		}else if(obs_right_diff <= 10 && obs_right_diff >= 0){
 			needle = obs_right_diff * NEEDLE_RPD * (-1);
-			System.out.println("Here");
 			point = "Left"; 
 		}else if(opp_left_diff >= -10 && opp_left_diff <= 0){//flip since we're doing the opposite side
 			needle = opp_left_diff * NEEDLE_RPD;

@@ -89,10 +89,18 @@ public class Compass extends JPanel implements KeyListener {
 
 			needle = ImageIO.read(getClass().getResourceAsStream(
 					"justNeedle.png"));
-
+			
+			/**************** LOOOOOOOOOOOOOK HEEEEEEEEEERRRRRRRRRREEEEEEEEEEEEEEE******************
+			 * Something needs to be changed here in order to make 
+			 * the Needle completely visible... It shows up completely visible if 
+			 * w = needle.getWidth() and h = needle.getHeight()
+			 * but not when w = 0 and h= 0. There is a little piece of the image,
+			 * and it is placed where it should be.
+			 * 
+			 */
 			rad = Math.toRadians(needleDegrees);
-			w = needle.getWidth() / 2;
-			h = needle.getHeight() / 2;
+			w = needle.getWidth()/2;
+			h = needle.getHeight()/2;
 			at = AffineTransform.getRotateInstance(rad, w, h);
 			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			int needlex = (compassImg.getWidth() / 2) - 5;
@@ -146,6 +154,11 @@ public class Compass extends JPanel implements KeyListener {
 	 */
 	public void rotateNeedle(double degrees) {
 		needleDegrees = 0 - degrees;
+	}
+	//Save time method. Put in the vor you want to use
+	public void updateVariables(VOR vor){
+		rotateOBS(vor.getOBS());
+		rotateNeedle(vor.getNeedle());
 	}
 
 	// move the picture to the side to see
