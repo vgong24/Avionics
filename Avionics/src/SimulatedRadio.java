@@ -5,6 +5,9 @@ public class SimulatedRadio {
 	i.e., the plane is over the station or too far away to receive signal
 	 
 	*/
+	/**************************************************************************** Instance Variables
+	 * 
+	 */
 	//radial is the degrees the plane is in relation to the VOR
 	int radial;
 	int stationID;
@@ -13,6 +16,13 @@ public class SimulatedRadio {
 	final private boolean BAD = false;
 	
 	boolean signal;
+	
+	/**************************************************************************** Constructor
+	 * 
+	 * @param radial
+	 * @param stationID
+	 * @param signal
+	 */
 	public SimulatedRadio(int radial, int stationID, boolean signal){
 		this.radial = radial;
 		this.stationID = stationID;
@@ -23,7 +33,10 @@ public class SimulatedRadio {
 		this.signal = signal;
 	}
 	
-	//accessor methods for VOR
+	/**************************************************************************** accessor methods
+	 * 
+	 * @return
+	 */
 	public int getRadial(){
 		return radial;
 	}
@@ -34,7 +47,10 @@ public class SimulatedRadio {
 		return signal;
 	}
 	
-	//mutator methods
+	/**************************************************************************** mutator methods
+	 * 
+	 * @param change
+	 */
 	public void updateRadial(int change){
 		/*if radial = 350, and change was 25 degrees. 
 		then radial = 15 degrees*/

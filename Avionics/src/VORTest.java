@@ -63,13 +63,72 @@ public class VORTest {
 	}
 	
 	//test needleDirection
+	//Testing position of plane near, far, left, and right of obs line
+	/**
+	 * obs direction: South, North, slightly northwest, east, west
+	 * plane position: +/- 10 degrees from obs, on obs and opposite of obs, perpendicular to obs
+	 */
 	@Test
 	public void testNeedleDirection(){
 		SimulatedRadio radio = new SimulatedRadio(45, true);
 		VOR tester = new VOR(90, radio);
 		assertEquals("direction of needle", "Right", tester.needleDirection());
 		tester.setOR(180,0);
+		assertEquals("direction of needle", "Middle", tester.needleDirection());
+		tester.setOR(180, 180);
+		assertEquals("direction of needle", "Middle", tester.needleDirection());
+		tester.setOR(180, 5);
 		assertEquals("direction of needle", "Right", tester.needleDirection());
+		tester.setOR(180, 355);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
+		tester.setOR(180, 175);
+		assertEquals("direction of needle", "Right", tester.needleDirection());
+		tester.setOR(180, 185);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
+		
+		tester.setOR(0,0);
+		assertEquals("direction of needle", "Middle", tester.needleDirection());
+		tester.setOR(0,180);
+		assertEquals("direction of needle", "Middle", tester.needleDirection());
+		tester.setOR(0, 5);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
+		tester.setOR(0, 355);
+		assertEquals("direction of needle", "Right", tester.needleDirection());
+		tester.setOR(0, 175);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
+		tester.setOR(0, 185);
+		assertEquals("direction of needle", "Right", tester.needleDirection());
+		
+		tester.setOR(355,355);
+		assertEquals("direction of needle", "Middle", tester.needleDirection());
+		tester.setOR(355,175);
+		assertEquals("direction of needle", "Middle", tester.needleDirection());
+		tester.setOR(355, 6);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
+		tester.setOR(355, 345);
+		assertEquals("direction of needle", "Right", tester.needleDirection());
+		tester.setOR(355, 170);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
+		tester.setOR(355, 185);
+		assertEquals("direction of needle", "Right", tester.needleDirection());
+		
+		
+		tester.setOR(90,90);
+		assertEquals("direction of needle", "Middle", tester.needleDirection());
+		tester.setOR(90,270);
+		assertEquals("direction of needle", "Middle", tester.needleDirection());
+		tester.setOR(90, 100);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
+		tester.setOR(90, 80);
+		assertEquals("direction of needle", "Right", tester.needleDirection());
+		tester.setOR(90, 260);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
+		tester.setOR(90, 275);
+		assertEquals("direction of needle", "Right", tester.needleDirection());
+		tester.setOR(90, 0);
+		assertEquals("direction of needle", "Right", tester.needleDirection());
+		tester.setOR(90,180);
+		assertEquals("direction of needle", "Left", tester.needleDirection());
 
 	}
 

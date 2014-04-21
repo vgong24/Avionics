@@ -31,13 +31,15 @@ public class VOR {
 		panel.add(myCompass);
 		frame.add(panel);
 
-		// create simulated radio
-		SimulatedRadio radio = new SimulatedRadio(45, true);
-		VOR vor = new VOR(100, radio);
+		// create simulated radio TESTING STARTS HERE
+		SimulatedRadio radio = new SimulatedRadio(5, true);
+		VOR vor = new VOR(180, radio);
 		// we would have an eventListner to change the OBS
-		vor.rotateOBS(-10);
+		//vor.rotateOBS(-10);
+		vor.setOR(90, 0);
+		vor.needleDirection();
 		myCompass.rotateOBS(vor.getOBS());
-		
+		myCompass.rotateNeedle(vor.getNeedle());
 		panel.add(myCompass);
 		frame.add(panel);
 		System.out.println("Any number between " + vor.getOBS()+ " and " + (vor.getOBS() + 180)%360 +" should point left");
@@ -46,6 +48,8 @@ public class VOR {
 		System.out.println(vor.mod(-5,360));
 		
 	}
+	
+	
 	//loops around 360 instead of getting negative numbers
 	private int mod(int a, int b){
 		int ret = a % b;
@@ -55,11 +59,8 @@ public class VOR {
 		return ret;
 	}
 	
-	
-	
-	
-	
-	// VOR ELEMENTS
+
+	/************************************************************************* VOR ELEMENTS
 	/*
 	 * Sets the direction of where the VOR is pointing to Gets degrees from the
 	 * OBS
@@ -73,21 +74,22 @@ public class VOR {
 	// radio
 	SimulatedRadio radio;
 	int radial = 0;
-	//needle direction
+	//needle direction in degrees
 	double needle = 0;
-	/**
-	 * Constructor
-	 */
 	//The max number the plane can defer from the obs line until it locks 
 	//In other words, the needle stops rotating after the plane is more than 10 of the obs line
-	private final int NEEDLE_DISTANCE = 10;
+	private final int NEEDLE_MAX_DISTANCE = 10;
 	private final double NEEDLE_RPD = 4.5;
+	
 	/**
 	 * Formula to find how much the needle should turn according to the angle 
 	 * rotation per degree = 45 / 10
 	 * if obs - radial > 10
-	 * needle = obs - radial
+	 * needle = obs - radial (basically)
 	 */
+	/*************************************************************************  Constructor
+	 */
+	
 	public VOR() {
 	}
 
@@ -102,7 +104,10 @@ public class VOR {
 
 	}
 
-	// accessor
+	/************************************************************************** Accessors
+	 * 
+	 * @return
+	 */
 	public int getOBS() {
 		return obs;
 	}
@@ -118,9 +123,15 @@ public class VOR {
 	public int getRadial() {
 		return radio.getRadial();
 	}
-
+	public double getNeedle(){
+		return needle;
+	}
+	
+	/************************************************************************* Mutators
+	 * 
+	 */
 	/**
-	 * Get the radio signal/dial from the plane input is stored in VOR
+	 * Get the radio signal/dial from the plane, input is stored in VOR
 	 * 
 	 * @param degree
 	 */
@@ -129,6 +140,7 @@ public class VOR {
 	}
 	public void setRadioRadial(int value){
 		radio.setRadial(value);
+		radial = value;
 	}
 	//for testing purposes, set obs And radial
 	public void setOR(int degree, int value){
@@ -142,7 +154,15 @@ public class VOR {
 		radio.updateRadial(degrees);
 		radial = radio.getRadial();
 	}
+	// If the obs changes, update it . There is a different method in Compass
+	// class, take note
+	public void rotateOBS(int degrees) {
+		obs = obs + degrees;
+	}
 
+	/**************************************************************************** Back End Logic Stuff
+	 * 
+	 */
 	/**
 	 * Checks whether the airplane radio is 'going to' or 'coming from' the VOR
 	 * returns 'true' if it is going to the VOR, 'false' if it is coming from
@@ -169,11 +189,7 @@ public class VOR {
 		return direction;
 	}
 
-	// If the obs changes, update it . There is a different method in Compass
-	// class, take note
-	public void rotateOBS(int degrees) {
-		obs = obs + degrees;
-	}
+	
 
 	/**
 	 * Needle logic If plane is on left side of OBS line, point needle right
@@ -191,28 +207,48 @@ public class VOR {
 	 * the needle will reach max rotation at 45%
 	 */
 	public String needleDirection() {
-		int opposite = (obs + 180) % 360;
+		int opposite = mod(obs + 180, 360);
+		int obs_left_diff = radial - obs;
+		int obs_right_diff = mod(obs_left_diff, 360);
+		int opp_left_diff = (opposite - radial);
+		int opp_right_diff = mod(opp_left_diff, 360);
 		String point = "Left";
 		if (radial == obs || radial == opposite) {
 			// point needle to middle
 			point = "Middle";
 			needle = 0;
-		}else
-		if (obs < 180) {
-			// if radial is between 0-obs or after opposite
-			// In other words, if radial is on left side of obs
+		}else if(obs_left_diff >= -10 && obs_left_diff <= 0){
+			needle = obs_left_diff * NEEDLE_RPD;
+			point = "Right";
+		}else if(obs_right_diff <= 10 && obs_right_diff >= 0){
+			needle = obs_right_diff * NEEDLE_RPD * (-1);
+			System.out.println("Here");
+			point = "Left"; 
+		}else if(opp_left_diff >= -10 && opp_left_diff <= 0){//flip since we're doing the opposite side
+			needle = opp_left_diff * NEEDLE_RPD;
+			point = "Right";
+		}else if(opp_right_diff <= 10 && opp_right_diff >= 0){
+			needle = opp_right_diff * NEEDLE_RPD * (-1);
+			point = "Left";
+		}else if(obs < 180){
 			if (radial < obs || radial > opposite) {
 				// point to the right
 				point = "Right";
 				//if radial is greater than obs -10 degrees
-				if(obs < 10 && radial > 0){
-					needle = (obs - radial) * NEEDLE_RPD;
-				}
-				
+				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD;
+			}else{
+				point = "Left";
+				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD * (-1);
 			}
-		} else {//if obs > 180
-			if(radial<obs || radial > opposite){
+			
+		}else{
+			//if radial is on left side of obs
+			if(radial > opposite && radial < obs){
 				point = "Right";
+				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD;
+			}else{
+				point = "Left";
+				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD;
 			}
 		}
 		return point;
