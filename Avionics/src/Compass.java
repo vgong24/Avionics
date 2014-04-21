@@ -97,11 +97,16 @@ public class Compass extends JPanel implements KeyListener {
 			 * but not when w = 0 and h= 0. There is a little piece of the image,
 			 * and it is placed where it should be.
 			 * 
+			 * 
+			 * edit: I think since the picture originally starts on the left corner
+			 * it will be cut off the window if you rotated it.
 			 */
 			rad = Math.toRadians(needleDegrees);
-			w = needle.getWidth()/2;
-			h = needle.getHeight()/2;
-			at = AffineTransform.getRotateInstance(rad, w, h);
+			w = needle.getWidth();
+			h = needle.getHeight();
+			double x = Math.cos(w) + Math.sin(h);
+			double y = Math.sin(0-w) + Math.cos(h);
+			at = AffineTransform.getRotateInstance(rad, x, y);
 			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			int needlex = (compassImg.getWidth() / 2) - 5;
 			int needley = compassImg.getHeight() / 4;
