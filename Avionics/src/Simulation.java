@@ -46,7 +46,7 @@ public class Simulation {
 		 * Trying to display i many JFrames to see if the needle
 		 * will slowly rotate according to the current radial
 		 */
-		for(int i = 0; i< 5; i++){
+		for(int i = 0; i< 360; i+=5){
 			frame = new JFrame();
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			panel = new JPanel();
@@ -59,7 +59,13 @@ public class Simulation {
 			frame.add(panel);
 			frame.pack();
 			frame.setVisible(true);
-			System.out.println(i);
+			System.out.println(i+"   To exit, drag box to the side and press x");
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		/*vor.setOR(0,355);
