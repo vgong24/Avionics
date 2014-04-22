@@ -189,12 +189,10 @@ public class VOR {
 		}
 		else if(obs_left_diff >= -10 && obs_left_diff <= 0){
 			needle = obs_left_diff * NEEDLE_RPD * (-1);
-			System.out.println(needle);
 			point = "Right";
 		}else if(obs_right_diff <= 10 && obs_right_diff >= 0){
 			needle = obs_right_diff * NEEDLE_RPD * (-1);
 			point = "Left"; 
-			System.out.println(needle);
 
 		}else if(opp_left_diff >= -10 && opp_left_diff <= 0){//flip since we're doing the opposite side
 			needle = opp_left_diff * NEEDLE_RPD * (-1);

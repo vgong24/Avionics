@@ -27,7 +27,7 @@ public class Simulation {
 		 * frame.setVisible(true);
 		 */
 		Compass myCompass = new Compass();
-
+		
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel panel = new JPanel();
@@ -42,10 +42,30 @@ public class Simulation {
 		VOR vor = new VOR(180, radio);
 		// we would have an eventListner to change the OBS
 		//vor.rotateOBS(-10);
-		vor.setOR(0,355);
+		/**
+		 * Trying to display i many JFrames to see if the needle
+		 * will slowly rotate according to the current radial
+		 */
+		for(int i = 0; i< 5; i++){
+			frame = new JFrame();
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			panel = new JPanel();
+			//change values
+			vor.setOR(0,i);
+			myCompass.updateVariables(vor);
+			
+			panel.add(myCompass);
+			panel.setVisible(true);
+			frame.add(panel);
+			frame.pack();
+			frame.setVisible(true);
+			System.out.println(i);
+		}
+		
+		/*vor.setOR(0,355);
 		myCompass.updateVariables(vor);
 		panel.add(myCompass);
-		frame.add(panel);
+		frame.add(panel);*/
 		System.out.println("If radial is between " + (vor.getOBS() + 180)%360 + " and " + vor.getOBS() +" should point right");
 		System.out.println("Radial: "+vor.getRadial());
 		System.out.println("Needle should point "+vor.needleDirection());
