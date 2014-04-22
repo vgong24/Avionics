@@ -114,12 +114,12 @@ public class Compass extends JPanel implements KeyListener {
 			at = AffineTransform.getRotateInstance(rad, w, h);
 			int needlex = (compassImg.getWidth() / 2);
 			int needley = compassImg.getHeight() / 4;
-			graphics.drawImage(needle, needlex, needley, this);
-			/* you can put it back in
+			//graphics.drawImage(needle, needlex, needley, this);
+			// you can put it back in
 			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			
 			graphics.drawImage(op.filter(needle, null), needlex, needley, this);
-			*/
+			
 			setFocusable(true);
 			requestFocusInWindow();
 

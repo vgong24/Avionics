@@ -42,7 +42,7 @@ public class Simulation {
 		VOR vor = new VOR(180, radio);
 		// we would have an eventListner to change the OBS
 		//vor.rotateOBS(-10);
-		vor.setOR(0, 90);
+		vor.setOR(90, 180);
 		myCompass.updateVariables(vor);
 		panel.add(myCompass);
 		frame.add(panel);
