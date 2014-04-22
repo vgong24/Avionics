@@ -182,7 +182,12 @@ public class VOR {
 			// point needle to middle
 			point = "Middle";
 			needle = 0;
-		}else if(obs_left_diff >= -10 && obs_left_diff <= 0){
+			//Adding || (obs_left_diff - 360) >=10
+		}else if(obs <= 10 && radial >=350 && mod(obs - radial,360) <= 10){ //Base case for numbers around 350 - 10
+			needle = mod(obs-radial,360) * NEEDLE_RPD;
+			point = "Right";
+		}
+		else if(obs_left_diff >= -10 && obs_left_diff <= 0){
 			needle = obs_left_diff * NEEDLE_RPD * (-1);
 			System.out.println(needle);
 			point = "Right";
