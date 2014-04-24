@@ -26,7 +26,7 @@ public class VOR {
 	}
 	
 
-	/************************************************************************* VOR ELEMENTS
+	/**************** ********************************************************* VOR ELEMENTS
 	/*
 	 * Sets the direction of where the VOR is pointing to Gets degrees from the
 	 * OBS
