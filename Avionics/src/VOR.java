@@ -112,6 +112,7 @@ public class VOR {
 	protected void setOR(int degree, int rad){
 		setOBS(degree);
 		setRadioRadial(rad);
+		direction(degree, rad);
 		needleDirection();
 	}
 

@@ -61,7 +61,7 @@ public class Simulation {
 				frame.add(panel);
 				frame.pack();
 				frame.setVisible(true);
-				System.out.println(i+"   To exit, drag box to the side and press x");
+				System.out.println(i+"  Direction: "+ vor.getDirection());
 				try {
 					Thread.sleep(300);
 				} catch (InterruptedException e) {
