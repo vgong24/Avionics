@@ -51,12 +51,12 @@ public class Simulation {
 				/*frame = new JFrame();
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				 */
-				panel = new JPanel();
 				//change values
 				vor.setOR(obs,i);
 				myCompass.updateVariables(vor);
 
 				panel.add(myCompass);
+				panel.updateUI();
 				panel.setVisible(true);
 				frame.add(panel);
 				frame.pack();
