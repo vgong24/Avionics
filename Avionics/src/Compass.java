@@ -10,6 +10,7 @@ public class Compass extends JPanel implements KeyListener {
 	/************************************************************************ Instance variables
 	 * 
 	 */
+	VOR vor;
 	double OBSDegrees;
 	double dirDegrees;
 	double needleDegrees;
@@ -44,10 +45,9 @@ public class Compass extends JPanel implements KeyListener {
 	 * OBS degrees or turn slower than when the OBS is spinning needleDegrees
 	 * should be calculated from where the plan is relative to VOR
 	 */
-	public Compass() {
-		OBSDegrees = 0;
-		dirDegrees = 0;
-		needleDegrees = 0;
+	public Compass(VOR vor) {
+		this.vor = vor;
+		updateVariables();
 		addKeyListener(this);
 	}
 	/**************************************************************************** Setup Interface
@@ -93,29 +93,15 @@ public class Compass extends JPanel implements KeyListener {
 
 			needle = ImageIO.read(getClass().getResourceAsStream(
 					"Needle2.png"));
-		
-			
-			/**************** LOOOOOOOOOOOOOK HEEEEEEEEEERRRRRRRRRREEEEEEEEEEEEEEE******************
-			 * Something needs to be changed here in order to make 
-			 * the Needle completely visible... It shows up completely visible if 
-			 * w = needle.getWidth() and h = needle.getHeight()
-			 * but not when w = 0 and h= 0. There is a little piece of the image,
-			 * and it is placed where it should be.
-			 * 
-			 * 
-			 * edit: I think since the picture originally starts on the left corner
-			 * it will be cut off the window if you rotated it.
-			 */
 			
 			rad = Math.toRadians(needleDegrees);
 			//We need to rotate at the top pivot point
+			//UPDATE: We just used a larger needle picture to rotate
 			w = needle.getWidth()/2;
 			h = needle.getHeight()/2;
 			at = AffineTransform.getRotateInstance(rad, 255, 120);
 			int needlex = (compassImg.getWidth() / 2);
 			int needley = compassImg.getHeight() / 4;
-			//graphics.drawImage(needle, needlex, needley, this);
-			// you can put it back in
 			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			
 			graphics.drawImage(op.filter(needle, null), 0, 0, this);
@@ -127,15 +113,13 @@ public class Compass extends JPanel implements KeyListener {
 			System.out.println(e);
 		}
 
-		// **********************
-		// need to at least do the needle still
 	}
 	/**************************************************************************** Event Listeners
 	 * 
 	 */
 	
 	public void keyPressed(KeyEvent event) {
-
+		
 		char ch = event.getKeyChar();
 
 		if (ch == 'a' || ch == 'b' || ch == 'c') {
@@ -149,7 +133,8 @@ public class Compass extends JPanel implements KeyListener {
 			System.out.println("Key codes: UP, " + event.getKeyCode());
 
 		}else if(event.getKeyCode() == KeyEvent.VK_LEFT){
-			
+			vor.rotateOBS(1);
+			updateVariables();
 		
 		}else{
 			System.out.println("Key codes: " + event.getKeyCode());
@@ -189,7 +174,7 @@ public class Compass extends JPanel implements KeyListener {
 		needleDegrees = 0 - degrees;
 	}
 	//Save time method. Put in the vor you want to use
-	public void updateVariables(VOR vor){
+	public void updateVariables(){
 		rotateOBS(vor.getOBS());
 		rotateNeedle(vor.getNeedle());
 	}

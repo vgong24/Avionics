@@ -6,9 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 public class MKeyListener {
-
-	public static void main(String[] argv) throws Exception {
-/*
+	public MKeyListener() {
 		JTextField textField = new JTextField();
 
 		textField.addKeyListener(new MyKeyListener());
@@ -20,7 +18,24 @@ public class MKeyListener {
 		jframe.setSize(400, 350);
 
 		jframe.setVisible(true);
-*/
+
+	}
+
+	public static void main(String[] argv) throws Exception {
+		MKeyListener mk = new MKeyListener();
+		/*
+		 * JTextField textField = new JTextField();
+		 * 
+		 * textField.addKeyListener(new MyKeyListener());
+		 * 
+		 * JFrame jframe = new JFrame();
+		 * 
+		 * jframe.add(textField);
+		 * 
+		 * jframe.setSize(400, 350);
+		 * 
+		 * jframe.setVisible(true);
+		 */
 	}
 
 }
@@ -42,7 +57,7 @@ class MyKeyListener extends KeyAdapter {
 
 			System.out.println("Key codes: " + event.getKeyCode());
 
-		}else{
+		} else {
 			System.out.println("Key codes: " + event.getKeyCode());
 		}
 

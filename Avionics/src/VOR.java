@@ -57,6 +57,10 @@ public class VOR {
 	 */
 	
 	public VOR() {
+		obs = 0;
+		radial = 0;
+		direction = direction(obs, radial);
+		needleDirection();
 	}
 
 	public VOR(int OBSsetting, SimulatedRadio radio) {
