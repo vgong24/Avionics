@@ -46,6 +46,7 @@ public class Compass extends JPanel implements KeyListener {
 	 * should be calculated from where the plan is relative to VOR
 	 */
 	public Compass(VOR vor) {
+		this.setPreferredSize(new Dimension(512,512));
 		this.vor = vor;
 		updateVariables();
 		addKeyListener(this);
@@ -53,10 +54,13 @@ public class Compass extends JPanel implements KeyListener {
 	/**************************************************************************** Setup Interface
 	 * 
 	 */
-	public Dimension getPreferredSize() {
+	/*public Dimension getPreferredSize() {
 		return new Dimension(512, 512);
+	}*/
+	public void addNotify(){
+		super.addNotify();
+		requestFocus();
 	}
-
 	protected void paintComponent(Graphics g) {
 		try {
 			super.paintComponent(g);
@@ -135,10 +139,12 @@ public class Compass extends JPanel implements KeyListener {
 		}else if(event.getKeyCode() == KeyEvent.VK_LEFT){
 			vor.rotateOBS(1);
 			updateVariables();
+			System.out.println(vor.getOBS());
 		
 		}else{
 			System.out.println("Key codes: " + event.getKeyCode());
 		}
+		repaint();
 
 	}
 
@@ -180,5 +186,13 @@ public class Compass extends JPanel implements KeyListener {
 	}
 
 	// move the picture to the side to see
+	
+	public static void main(String[] s){
+		JFrame f = new JFrame();
+		f.getContentPane().add(new Compass(new VOR(0, new SimulatedRadio(5, true))));
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.pack();
+		f.setVisible(true);
+	}
 
 }
