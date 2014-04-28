@@ -31,8 +31,8 @@ public class Simulation {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel panel = new JPanel();
-		/*panel.add(myCompass);
-		panel.setVisible(true);
+		panel.add(myCompass);
+		/*panel.setVisible(true);
 		frame.add(panel);
 		frame.pack();
 		frame.setVisible(true);
@@ -40,24 +40,27 @@ public class Simulation {
 		// create simulated radio TESTING STARTS HERE
 		SimulatedRadio radio = new SimulatedRadio(5, true);
 		VOR vor = new VOR(180, radio);
+		frame.add(panel);
+		frame.pack();
+		frame.setVisible(true);
+		
+		
+		
 		// we would have an eventListner to change the OBS
 		//vor.rotateOBS(-10);
 		/**
 		 * Trying to display i many JFrames to see if the needle
 		 * will slowly rotate according to the current radial
 		 */
-		for(int obs = 0; obs < 180; obs+=5){
+		/*for(int obs = 0; obs < 180; obs+=5){
 			for(int i = 0; i < 360; i +=5){
-				/*frame = new JFrame();
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				 */
-				//change values
+				
 				vor.setOR(obs,i);
 				myCompass.updateVariables(vor);
 
 				panel.add(myCompass);
 				panel.updateUI();
-				panel.setVisible(true);
+				//panel.setVisible(true);
 				frame.add(panel);
 				frame.pack();
 				frame.setVisible(true);
@@ -69,7 +72,8 @@ public class Simulation {
 					e.printStackTrace();
 				}
 			}
-		}
+		}*/
+		
 
 		/*vor.setOR(0,355);
 		myCompass.updateVariables(vor);

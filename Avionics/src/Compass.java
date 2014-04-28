@@ -134,7 +134,27 @@ public class Compass extends JPanel implements KeyListener {
 	 * 
 	 */
 	
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent event) {
+
+		char ch = event.getKeyChar();
+
+		if (ch == 'a' || ch == 'b' || ch == 'c') {
+
+			System.out.println(event.getKeyChar());
+
+		}
+
+		if (event.getKeyCode() == KeyEvent.VK_UP) {
+
+			System.out.println("Key codes: UP, " + event.getKeyCode());
+
+		}else if(event.getKeyCode() == KeyEvent.VK_LEFT){
+			
+		
+		}else{
+			System.out.println("Key codes: " + event.getKeyCode());
+		}
+
 	}
 
 	public void keyReleased(KeyEvent e) {
