@@ -10,6 +10,8 @@ public class Compass extends JPanel implements KeyListener {
 	/************************************************************************ Instance variables
 	 * 
 	 */
+	VOR vor;
+	SimulatedRadio radio;
 	double OBSDegrees;
 	double dirDegrees;
 	double needleDegrees;
@@ -44,19 +46,23 @@ public class Compass extends JPanel implements KeyListener {
 	 * OBS degrees or turn slower than when the OBS is spinning needleDegrees
 	 * should be calculated from where the plan is relative to VOR
 	 */
-	public Compass() {
-		OBSDegrees = 0;
-		dirDegrees = 0;
-		needleDegrees = 0;
+	public Compass(VOR vor) {
+		this.setPreferredSize(new Dimension(512,512));
+		this.vor = vor;
+		radio = vor.getRadio();
+		updateVariables();
 		addKeyListener(this);
 	}
 	/**************************************************************************** Setup Interface
 	 * 
 	 */
-	public Dimension getPreferredSize() {
+	/*public Dimension getPreferredSize() {
 		return new Dimension(512, 512);
+	}*/
+	public void addNotify(){
+		super.addNotify();
+		requestFocus();
 	}
-
 	protected void paintComponent(Graphics g) {
 		try {
 			super.paintComponent(g);
@@ -93,29 +99,15 @@ public class Compass extends JPanel implements KeyListener {
 
 			needle = ImageIO.read(getClass().getResourceAsStream(
 					"Needle2.png"));
-		
-			
-			/**************** LOOOOOOOOOOOOOK HEEEEEEEEEERRRRRRRRRREEEEEEEEEEEEEEE******************
-			 * Something needs to be changed here in order to make 
-			 * the Needle completely visible... It shows up completely visible if 
-			 * w = needle.getWidth() and h = needle.getHeight()
-			 * but not when w = 0 and h= 0. There is a little piece of the image,
-			 * and it is placed where it should be.
-			 * 
-			 * 
-			 * edit: I think since the picture originally starts on the left corner
-			 * it will be cut off the window if you rotated it.
-			 */
 			
 			rad = Math.toRadians(needleDegrees);
 			//We need to rotate at the top pivot point
+			//UPDATE: We just used a larger needle picture to rotate
 			w = needle.getWidth()/2;
 			h = needle.getHeight()/2;
 			at = AffineTransform.getRotateInstance(rad, 255, 120);
 			int needlex = (compassImg.getWidth() / 2);
 			int needley = compassImg.getHeight() / 4;
-			//graphics.drawImage(needle, needlex, needley, this);
-			// you can put it back in
 			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			
 			graphics.drawImage(op.filter(needle, null), 0, 0, this);
@@ -127,14 +119,31 @@ public class Compass extends JPanel implements KeyListener {
 			System.out.println(e);
 		}
 
-		// **********************
-		// need to at least do the needle still
 	}
 	/**************************************************************************** Event Listeners
 	 * 
 	 */
 	
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent event) {
+
+		if (event.getKeyCode() == KeyEvent.VK_UP) {
+			vor.rotateRadial(1);
+		}else if(event.getKeyCode() == KeyEvent.VK_DOWN){
+			vor.rotateRadial(-1);
+			
+		}else if(event.getKeyCode() == KeyEvent.VK_LEFT){
+			vor.rotateOBS(-1);
+		
+		}else if(event.getKeyCode() == KeyEvent.VK_RIGHT){
+			vor.rotateOBS(1);
+		}
+		vor.needleDirection();
+		updateVariables();
+		
+		System.out.println("OBS currently set at : "+vor.getOBS()+ "; Radial currently set at : "+vor.getRadial() + " Signal Strength: " + vor.getSignal());
+
+		repaint();
+
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -154,7 +163,7 @@ public class Compass extends JPanel implements KeyListener {
 	 * 
 	 * @param degrees
 	 */
-	public void rotateOBS(int degrees) {
+	public void rotateOBS(double degrees) {
 		dirDegrees = 0 - degrees;
 		OBSDegrees = 0 - degrees;
 	}
@@ -169,11 +178,20 @@ public class Compass extends JPanel implements KeyListener {
 		needleDegrees = 0 - degrees;
 	}
 	//Save time method. Put in the vor you want to use
-	public void updateVariables(VOR vor){
+	public void updateVariables(){
 		rotateOBS(vor.getOBS());
 		rotateNeedle(vor.getNeedle());
+		vor.direction();
 	}
 
 	// move the picture to the side to see
+	
+	/*public static void main(String[] s){
+		JFrame f = new JFrame();
+		f.getContentPane().add(new Compass(new VOR(0, new SimulatedRadio(5, true))));
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.pack();
+		f.setVisible(true);
+	}*/
 
 }

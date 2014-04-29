@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+import java.awt.event.*;
+import java.awt.*;
 
 public class Simulation {
 
@@ -8,38 +9,9 @@ public class Simulation {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Hello World");
-		System.out.println("Welcome Aboard.");
-		System.out.println("Thank you for flying Juneau Airlines! :)");
-		System.out.println("----------------------------------------");
-
-		/**************************************** Initial setup
-		 * 
-		 * Compass myCompass = new Compass();
-		 * JFrame frame = new JFrame();
-		 * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 * JPanel panel = new JPanel();
-		 * panel.add(myCompass);
-		 * panel.setVisible(true);
-		 * frame.add(panel);
-		 * frame.pack();
-		 * frame.setVisible(true);
-		 */
-		Compass myCompass = new Compass();
-
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JPanel panel = new JPanel();
-		/*panel.add(myCompass);
-		panel.setVisible(true);
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
-		 */
-		// create simulated radio TESTING STARTS HERE
-		SimulatedRadio radio = new SimulatedRadio(5, true);
+		SimulatedRadio radio = new SimulatedRadio(0, true);
 		VOR vor = new VOR(180, radio);
+<<<<<<< HEAD
 		// we would have an eventListner to change the OBS
 		//vor.rotateOBS(-10);
 		/**
@@ -79,6 +51,14 @@ public class Simulation {
 		System.out.println("Radial: "+vor.getRadial());
 		System.out.println("Needle should point "+vor.needleDirection());
 		System.out.println(vor.mod(-5,360));
+=======
+		Compass compass = new Compass(vor);
+		JFrame f = new JFrame();
+		f.getContentPane().add(compass);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.pack();
+		f.setVisible(true);
+>>>>>>> 869cc721892a15e2d383357913ab299bc1a11da4
 	}
-
+	
 }
