@@ -17,14 +17,14 @@ public class VOR {
 	 * @return
 	 */
 	//loops around 360 instead of getting negative numbers
-	public static int mod(int a, int b){
-		int ret = a % b;
+	public static double mod(double a, double b){
+		double ret = a % b;
 		if(ret < 0){
 			ret+=b;
 		}
 		return ret;
 	}
-	private int mod(int degree){
+	private double mod(double degree){
 		return mod(degree, 360);
 	}
 	
@@ -34,15 +34,17 @@ public class VOR {
 	 * Sets the direction of where the VOR is pointing to Gets degrees from the
 	 * OBS
 	 */
-	int obs;
-
+	double obs;
+	boolean signal;
+	final private boolean GOOD = true;
+	final private boolean BAD = false;
 	/*
 	 * Where the object is relative to VOR
 	 */
 	String direction = "TO";
 	// radio
 	SimulatedRadio radio;
-	int radial = 0;
+	double radial = 0;
 	//needle direction in degrees
 	double needle = 0;
 	//The max number the plane can defer from the obs line until it locks 
@@ -71,8 +73,8 @@ public class VOR {
 		this.radio = radio;
 		obs = OBSsetting;
 		radial = radio.getRadial();
-		direction = direction(obs, radial);
-		//automatically sets the needle variable
+		direction = direction();
+		//automatically sets the needle variable also the signal
 		needleDirection();
 
 	}
@@ -81,7 +83,7 @@ public class VOR {
 	 * 
 	 * @return
 	 */
-	public int getOBS() {
+	public double getOBS() {
 		return obs;
 	}
 
@@ -93,11 +95,14 @@ public class VOR {
 		return radio;
 	}
 
-	public int getRadial() {
+	public double getRadial() {
 		return radio.getRadial();
 	}
 	public double getNeedle(){
 		return needle;
+	}
+	public String getSignal(){
+		return (signal) ? "GOOD" : "BAD";
 	}
 	
 	/************************************************************************* Mutators
@@ -108,15 +113,15 @@ public class VOR {
 	 * 
 	 * @param degree
 	 */
-	public void setOBS(int degree) {
+	public void setOBS(double degree) {
 		obs = mod(degree);
 	}
-	public void setRadioRadial(int value){
+	public void setRadioRadial(double value){
 		radio.setRadial(value);
 		radial = value;
 	}
 	//for testing purposes, set obs And radial
-	protected void setOR(int degree, int rad){
+	protected void setOR(double degree, double rad){
 		setOBS(degree);
 		setRadioRadial(rad);
 		direction(degree, rad);
@@ -124,16 +129,16 @@ public class VOR {
 	}
 
 	// Change the radial from the radio, then update the radial for this class
-	public void updateRadial(int degrees) {
+	public void setRadial(double degrees) {
 		radio.updateRadial(degrees);
 		radial = radio.getRadial();
 	}
 	// If the obs changes, update it . There is a different method in Compass
 	// class, take note
-	public void rotateOBS(int degrees) {
+	public void rotateOBS(double degrees) {
 		obs = mod(obs + degrees);
 	}
-	public void rotateRadial(int degrees){
+	public void rotateRadial(double degrees){
 		radial = mod(radial + degrees);
 		radio.updateRadial(radial);
 	}
@@ -148,12 +153,14 @@ public class VOR {
 	 */
 
 	// Edit direction method
-	public String direction(int obs, int radial) {
+	public String direction(double obs, double radial) {
 		direction = "TO";
-		int obsLeft = mod(obs-90, 360);
-		int obsRight = mod(obs+90, 360);	
+		double obsLeft = mod(obs-90, 360);
+		double obsRight = mod(obs+90, 360);	
 		if(radial == obsLeft || radial == obsRight){
 			direction = "OFF";
+			signal = BAD;
+			return direction;
 		}else if(obs < 90 || obs >= 270){
 			if(radial >=0 && radial < obsRight){
 				direction = "FROM";
@@ -163,7 +170,11 @@ public class VOR {
 		}else if(radial > obsLeft && radial < obsRight){
 			direction = "FROM";
 		}
+		signal = GOOD;
 		return direction;
+	}
+	public String direction(){
+		return direction(obs, radial);
 	}
 
 	
@@ -184,11 +195,11 @@ public class VOR {
 	 * the needle will reach max rotation at 45%
 	 */
 	public String needleDirection() {
-		int opposite = mod(obs + 180, 360);
-		int obs_left_diff = radial - obs;
-		int obs_right_diff = mod(obs_left_diff, 360);
-		int opp_left_diff = (opposite - radial);
-		int opp_right_diff = mod(opp_left_diff, 360);
+		double opposite = mod(obs + 180);
+		double obs_left_diff = radial - obs;
+		double obs_right_diff = mod(obs_left_diff, 360);
+		double opp_left_diff = (opposite - radial);
+		double opp_right_diff = mod(opp_left_diff, 360);
 		String point = "Left";
 		if (radial == obs || radial == opposite) {
 			// point needle to middle
@@ -196,41 +207,41 @@ public class VOR {
 			needle = 0;
 			//Adding || (obs_left_diff - 360) >=10
 		}else if(obs <= 10 && radial >=350 && mod(obs - radial,360) <= 10){ //Base case for numbers around 350 - 10
-			needle = mod(obs-radial,360) * NEEDLE_RPD;
+			needle = mod(obs-radial * NEEDLE_RPD);
 			point = "Right";
 		}
 		else if(obs_left_diff >= -10 && obs_left_diff <= 0){
-			needle = obs_left_diff * NEEDLE_RPD * (-1);
+			needle = mod(obs_left_diff * NEEDLE_RPD * (-1));
 			point = "Right";
 		}else if(obs_right_diff <= 10 && obs_right_diff >= 0){
-			needle = obs_right_diff * NEEDLE_RPD * (-1);
+			needle = mod(obs_right_diff * NEEDLE_RPD * (-1));
 			point = "Left"; 
 
 		}else if(opp_left_diff >= -10 && opp_left_diff <= 0){//flip since we're doing the opposite side
-			needle = opp_left_diff * NEEDLE_RPD * (-1);
+			needle = mod(opp_left_diff * NEEDLE_RPD * (-1));
 			point = "Right";
 		}else if(opp_right_diff <= 10 && opp_right_diff >= 0){
-			needle = opp_right_diff * NEEDLE_RPD * (-1);
+			needle = mod(opp_right_diff * NEEDLE_RPD * (-1));
 			point = "Left";
 		}else if(obs < 180){
 			if (radial < obs || radial > opposite) {
 				// point to the right
 				point = "Right";
 				//if radial is greater than obs -10 degrees
-				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD;
+				needle = mod(NEEDLE_MAX_DISTANCE * NEEDLE_RPD);
 			}else{
 				point = "Left";
-				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD * (-1);
+				needle = mod(NEEDLE_MAX_DISTANCE * NEEDLE_RPD * (-1));
 			}
 			
 		}else{
 			//if radial is on left side of obs
 			if(radial > opposite && radial < obs){
 				point = "Right";
-				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD;
+				needle = mod(NEEDLE_MAX_DISTANCE * NEEDLE_RPD);
 			}else{
 				point = "Left";
-				needle = NEEDLE_MAX_DISTANCE * NEEDLE_RPD * (-1);
+				needle = mod(NEEDLE_MAX_DISTANCE * NEEDLE_RPD * (-1));
 			}
 		}
 		return point;

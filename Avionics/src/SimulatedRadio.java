@@ -9,8 +9,8 @@ public class SimulatedRadio {
 	 * 
 	 */
 	//radial is the degrees the plane is in relation to the VOR
-	int radial;
-	int stationID;
+	double radial;
+	double stationID;
 	
 	final private boolean GOOD = true;
 	final private boolean BAD = false;
@@ -37,10 +37,10 @@ public class SimulatedRadio {
 	 * 
 	 * @return
 	 */
-	public int getRadial(){
+	public double getRadial(){
 		return radial;
 	}
-	public int getStationID(){
+	public double getStationID(){
 		return stationID;
 	}
 	public boolean getSignalStrength(){
@@ -51,12 +51,12 @@ public class SimulatedRadio {
 	 * 
 	 * @param change
 	 */
-	public void updateRadial(int change){
+	public void updateRadial(double change){
 		/*if radial = 350, and change was 25 degrees. 
 		then radial = 15 degrees*/
 		radial = change;
 	}
-	public void setRadial(int value){
+	public void setRadial(double value){
 		radial = value;
 	}
 }

@@ -132,16 +132,15 @@ public class Compass extends JPanel implements KeyListener {
 			vor.rotateRadial(-1);
 			
 		}else if(event.getKeyCode() == KeyEvent.VK_LEFT){
-			vor.rotateOBS(1);
+			vor.rotateOBS(-1);
 		
 		}else if(event.getKeyCode() == KeyEvent.VK_RIGHT){
-			vor.rotateOBS(-1);
+			vor.rotateOBS(1);
 		}
 		vor.needleDirection();
 		updateVariables();
 		
-		System.out.println("OBS currently set at : "+vor.getOBS()+ "; Radial currently set at : "+vor.getRadial());
-
+		System.out.println("OBS currently set at : "+vor.getOBS()+ "; Radial currently set at : "+vor.getRadial() + " Signal Strength: " + vor.getSignal());
 
 		repaint();
 
@@ -164,7 +163,7 @@ public class Compass extends JPanel implements KeyListener {
 	 * 
 	 * @param degrees
 	 */
-	public void rotateOBS(int degrees) {
+	public void rotateOBS(double degrees) {
 		dirDegrees = 0 - degrees;
 		OBSDegrees = 0 - degrees;
 	}
@@ -182,16 +181,17 @@ public class Compass extends JPanel implements KeyListener {
 	public void updateVariables(){
 		rotateOBS(vor.getOBS());
 		rotateNeedle(vor.getNeedle());
+		vor.direction();
 	}
 
 	// move the picture to the side to see
 	
-	public static void main(String[] s){
+	/*public static void main(String[] s){
 		JFrame f = new JFrame();
 		f.getContentPane().add(new Compass(new VOR(0, new SimulatedRadio(5, true))));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.pack();
 		f.setVisible(true);
-	}
+	}*/
 
 }
