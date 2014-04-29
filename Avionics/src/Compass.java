@@ -11,6 +11,7 @@ public class Compass extends JPanel implements KeyListener {
 	 * 
 	 */
 	VOR vor;
+	SimulatedRadio radio;
 	double OBSDegrees;
 	double dirDegrees;
 	double needleDegrees;
@@ -48,6 +49,7 @@ public class Compass extends JPanel implements KeyListener {
 	public Compass(VOR vor) {
 		this.setPreferredSize(new Dimension(512,512));
 		this.vor = vor;
+		radio = vor.getRadio();
 		updateVariables();
 		addKeyListener(this);
 	}
@@ -123,27 +125,24 @@ public class Compass extends JPanel implements KeyListener {
 	 */
 	
 	public void keyPressed(KeyEvent event) {
-		
-		char ch = event.getKeyChar();
-
-		if (ch == 'a' || ch == 'b' || ch == 'c') {
-
-			System.out.println(event.getKeyChar());
-
-		}
 
 		if (event.getKeyCode() == KeyEvent.VK_UP) {
-
-			System.out.println("Key codes: UP, " + event.getKeyCode());
-
+			vor.rotateRadial(1);
+		}else if(event.getKeyCode() == KeyEvent.VK_DOWN){
+			vor.rotateRadial(-1);
+			
 		}else if(event.getKeyCode() == KeyEvent.VK_LEFT){
 			vor.rotateOBS(1);
-			updateVariables();
-			System.out.println(vor.getOBS());
 		
-		}else{
-			System.out.println("Key codes: " + event.getKeyCode());
+		}else if(event.getKeyCode() == KeyEvent.VK_RIGHT){
+			vor.rotateOBS(-1);
 		}
+		vor.needleDirection();
+		updateVariables();
+		
+		System.out.println("OBS currently set at : "+vor.getOBS()+ "; Radial currently set at : "+vor.getRadial());
+
+
 		repaint();
 
 	}

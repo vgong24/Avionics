@@ -54,7 +54,7 @@ public class SimulatedRadio {
 	public void updateRadial(int change){
 		/*if radial = 350, and change was 25 degrees. 
 		then radial = 15 degrees*/
-		radial = (radial + change + 360) % 360;
+		radial = change;
 	}
 	public void setRadial(int value){
 		radial = value;

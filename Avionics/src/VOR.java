@@ -24,6 +24,9 @@ public class VOR {
 		}
 		return ret;
 	}
+	private int mod(int degree){
+		return mod(degree, 360);
+	}
 	
 
 	/**************** ********************************************************* VOR ELEMENTS
@@ -106,7 +109,7 @@ public class VOR {
 	 * @param degree
 	 */
 	public void setOBS(int degree) {
-		obs = degree;
+		obs = mod(degree);
 	}
 	public void setRadioRadial(int value){
 		radio.setRadial(value);
@@ -128,7 +131,11 @@ public class VOR {
 	// If the obs changes, update it . There is a different method in Compass
 	// class, take note
 	public void rotateOBS(int degrees) {
-		obs = obs + degrees;
+		obs = mod(obs + degrees);
+	}
+	public void rotateRadial(int degrees){
+		radial = mod(radial + degrees);
+		radio.updateRadial(radial);
 	}
 
 	/**************************************************************************** Back End Logic Stuff
