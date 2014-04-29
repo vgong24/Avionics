@@ -207,7 +207,7 @@ public class VOR {
 			needle = 0;
 			//Adding || (obs_left_diff - 360) >=10
 		}else if(obs <= 10 && radial >=350 && mod(obs - radial,360) <= 10){ //Base case for numbers around 350 - 10
-			needle = mod(obs-radial * NEEDLE_RPD);
+			needle = mod(obs-radial * NEEDLE_RPD) * (-1);
 			point = "Right";
 		}
 		else if(obs_left_diff >= -10 && obs_left_diff <= 0){
