@@ -217,7 +217,14 @@ public class VOR {
 			needle = mod(obs_right_diff * NEEDLE_RPD * (-1));
 			point = "Left"; 
 
-		}else if(opp_left_diff >= -10 && opp_left_diff <= 0){//flip since we're doing the opposite side
+		}//opposite fix probably
+		else if(opposite >= 350 && radial <=10 && mod(opposite - radial) >= 350){ //Base case for numbers around 350 - 10
+			needle = mod(radial - opposite) * NEEDLE_RPD;
+			point = "Right";
+		}
+		
+		
+		else if(opp_left_diff >= -10 && opp_left_diff <= 0){//flip since we're doing the opposite side
 			needle = mod(opp_left_diff * NEEDLE_RPD * (-1));
 			point = "Right";
 		}else if(opp_right_diff <= 10 && opp_right_diff >= 0){
