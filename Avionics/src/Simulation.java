@@ -9,8 +9,8 @@ public class Simulation {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SimulatedRadio radio = new SimulatedRadio(0, true);
-		VOR vor = new VOR(180, radio);
+		SimulatedRadio radio = new SimulatedRadio(359, true);
+		VOR vor = new VOR(8, radio);
 		Compass compass = new Compass(vor);
 		JFrame f = new JFrame();
 		f.getContentPane().add(compass);
