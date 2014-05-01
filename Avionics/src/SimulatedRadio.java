@@ -17,6 +17,34 @@ public class SimulatedRadio {
 	
 	boolean signal;
 	
+	//Morse code symbols (source: Wikipedia)
+	String a = ". -";
+	String b = "- . . . ";
+	String c = "- . - ." ;
+	String d = "- . .";
+	String e = ".";
+	String f = ". . - .";
+	String g = "- - .";
+	String h = ". . . .";
+	String i = ". .";
+	String j = ". - - -";
+	String k = "- . -";
+	String l = ". - . .";
+	String m = "- -";
+	String n = "- .";
+	String o = "- - -";
+	String p = ". - - .";
+	String q = "- - . -";
+	String r = ". - .";
+	String s = ". . .";
+	String t = "-";
+	String u = ". . -";
+	String v = ". . . -";
+	String w = ". - -";
+	String x = "- . . -";
+	String y = "- . - -";
+	String z = "- - . .";
+	
 	/**************************************************************************** Constructor
 	 * 
 	 * @param radial
@@ -59,4 +87,118 @@ public class SimulatedRadio {
 	public void setRadial(double value){
 		radial = value;
 	}
+	
+	/**
+	 * Assuming that you manually have to enter the stationID, the method
+	 * converts the written letters to morse codes and returns it.
+	 * 
+	 * QUESTION:  DO WE HAVE TO MANUALLY TYPE THIS OR IS IT RANDOMLY GENERATED?
+	 *            WE CAN REPLACE THE FUNCTION PARAMETERS WITH A RANDOM GENERATOR IF NECESSARY. - Jason
+	 * 
+	 * @param first
+	 * @param second
+	 * @param third
+	 * @return string
+	 */
+	public String setStationID(String first, String second, String third){
+		String morseCode;
+		
+		//transcribe first letter
+		switch(first){
+			case "a": morseCode = a; break;
+			case "b": morseCode = b; break;
+			case "c": morseCode = c; break;
+			case "d": morseCode = d; break;
+			case "e": morseCode = e; break;
+			case "f": morseCode = f; break;
+			case "g": morseCode = g; break;
+			case "h": morseCode = h; break;
+			case "i": morseCode = i; break;
+			case "j": morseCode = j; break;
+			case "k": morseCode = k; break;
+			case "l": morseCode = l; break;
+			case "m": morseCode = m; break;
+			case "n": morseCode = n; break;
+			case "o": morseCode = o; break;
+			case "p": morseCode = p; break;
+			case "q": morseCode = q; break;
+			case "r": morseCode = r; break;
+			case "s": morseCode = s; break;
+			case "t": morseCode = t; break;
+			case "u": morseCode = u; break;
+			case "v": morseCode = v; break;
+			case "w": morseCode = w; break;
+			case "x": morseCode = x; break;
+			case "y": morseCode = y; break;
+			case "z": morseCode = z; break;
+			default:  morseCode = "Destination Not Found; Try again!"; break;
+		}
+			
+		//transcribe second letter
+		switch(second){
+			case "a": morseCode = morseCode + "   " + a; break;
+			case "b": morseCode = morseCode + "   " + b; break;
+			case "c": morseCode = morseCode + "   " + c; break;
+			case "d": morseCode = morseCode + "   " + d; break;
+			case "e": morseCode = morseCode + "   " + e; break;
+			case "f": morseCode = morseCode + "   " + f; break;
+			case "g": morseCode = morseCode + "   " + g; break;
+			case "h": morseCode = morseCode + "   " + h; break;
+			case "i": morseCode = morseCode + "   " + i; break;
+			case "j": morseCode = morseCode + "   " + j; break;
+			case "k": morseCode = morseCode + "   " + k; break;
+			case "l": morseCode = morseCode + "   " + l; break;
+			case "m": morseCode = morseCode + "   " + m; break;
+			case "n": morseCode = morseCode + "   " + n; break;
+			case "o": morseCode = morseCode + "   " + o; break;
+			case "p": morseCode = morseCode + "   " + p; break;
+			case "q": morseCode = morseCode + "   " + q; break;
+			case "r": morseCode = morseCode + "   " + r; break;
+			case "s": morseCode = morseCode + "   " + s; break;
+			case "t": morseCode = morseCode + "   " + t; break;
+			case "u": morseCode = morseCode + "   " + u; break;
+			case "v": morseCode = morseCode + "   " + v; break;
+			case "w": morseCode = morseCode + "   " + w; break;
+			case "x": morseCode = morseCode + "   " + x; break;
+			case "y": morseCode = morseCode + "   " + y; break;
+			case "z": morseCode = morseCode + "   " + z; break;
+			default:  morseCode = "Destination Not Found; Try again!\n"; break;
+		}
+			
+		//transcribe third letter
+				switch(third){
+					case "a": morseCode = morseCode + "   " + a; break;
+					case "b": morseCode = morseCode + "   " + b; break;
+					case "c": morseCode = morseCode + "   " + c; break;
+					case "d": morseCode = morseCode + "   " + d; break;
+					case "e": morseCode = morseCode + "   " + e; break;
+					case "f": morseCode = morseCode + "   " + f; break;
+					case "g": morseCode = morseCode + "   " + g; break;
+					case "h": morseCode = morseCode + "   " + h; break;
+					case "i": morseCode = morseCode + "   " + i; break;
+					case "j": morseCode = morseCode + "   " + j; break;
+					case "k": morseCode = morseCode + "   " + k; break;
+					case "l": morseCode = morseCode + "   " + l; break;
+					case "m": morseCode = morseCode + "   " + m; break;
+					case "n": morseCode = morseCode + "   " + n; break;
+					case "o": morseCode = morseCode + "   " + o; break;
+					case "p": morseCode = morseCode + "   " + p; break;
+					case "q": morseCode = morseCode + "   " + q; break;
+					case "r": morseCode = morseCode + "   " + r; break;
+					case "s": morseCode = morseCode + "   " + s; break;
+					case "t": morseCode = morseCode + "   " + t; break;
+					case "u": morseCode = morseCode + "   " + u; break;
+					case "v": morseCode = morseCode + "   " + v; break;
+					case "w": morseCode = morseCode + "   " + w; break;
+					case "x": morseCode = morseCode + "   " + x; break;
+					case "y": morseCode = morseCode + "   " + y; break;
+					case "z": morseCode = morseCode + "   " + z; break;
+					default:  morseCode = "Destination Not Found; Try again!\n"; break;
+		}
+		return morseCode;	
+		
+	}
+	
 }
+
+
