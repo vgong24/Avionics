@@ -12,7 +12,13 @@ public class Simulation {
 
 		SimulatedRadio radio = new SimulatedRadio(358, true);
 		VOR vor = new VOR(4, radio);
-
+		
+		
+		//Given an already-set input, the setStationID prints the morse code of the VOR station
+		String morseCode = radio.setStationID("h", "n", "l");
+		System.out.println("VOR Station ID: " + morseCode);
+		
+		
 		Compass compass = new Compass(vor);
 		JFrame f = new JFrame();
 		f.getContentPane().add(compass);
