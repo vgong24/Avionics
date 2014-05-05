@@ -16,6 +16,12 @@ public class SimulatedRadio {
 	final private boolean BAD = false;
 	
 	boolean signal;
+	int firstLetter = 97;
+	
+	final String[] alphaMorse = {". -", "- . . . ","- . - .", "- . .", ".", ". . - .","- - .",
+			". . . .", ". .", ". - - -", "- . -", ". - . .", "- -", "- .", "- - -", ". - - .",
+			"- - . -", ". - .", ". . .", "-", ". . -", ". . . -", ". - -", "- . . -", "- . - -",
+			"- - . ."};
 	
 	//Morse code symbols (source: Wikipedia)
 	String a = ". -";
@@ -100,10 +106,12 @@ public class SimulatedRadio {
 	 * @param third
 	 * @return string
 	 */
+	
 	public String setStationID(String first, String second, String third){
-		String morseCode;
+		String morseCode = "";
 		
 		//transcribe first letter
+				
 		switch(first){
 			case "a": morseCode = a; break;
 			case "b": morseCode = b; break;
@@ -197,6 +205,26 @@ public class SimulatedRadio {
 		}
 		return morseCode;	
 		
+	}
+	
+	public String setStationID(String id){
+		String morseCode = "";
+		if(id.length() != 3){
+			return "ID needs to be 3 characters. Try again\n";
+		}
+		char[] list = new char[3];
+				id.getChars(0, id.length(), list, 0);
+				
+				for(int i = 0; i <list.length; i++){
+					if(list[i] < 'a' || list[i] > 'z'){
+						return "Found character not between a - z. Try again\n";
+					}else if(i == list.length -1){
+						morseCode += alphaMorse[list[i] - 'a'];
+					}else{
+						morseCode += alphaMorse[list[i] - 'a'] + " , ";
+					}
+				}
+				return morseCode;
 	}
 	
 }

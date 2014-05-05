@@ -17,7 +17,8 @@ public class Simulation {
 		//Given an already-set input, the setStationID prints the morse code of the VOR station
 		String morseCode = radio.setStationID("h", "n", "l");
 		System.out.println("VOR Station ID: " + morseCode);
-		
+		String test = radio.setStationID("abz");
+		System.out.println("test: "+ test);
 		
 		Compass compass = new Compass(vor);
 		JFrame f = new JFrame();
