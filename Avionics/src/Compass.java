@@ -72,9 +72,9 @@ public class Compass extends JPanel implements KeyListener {
 					"Needle2.png"));
 			obsImg = ImageIO
 					.read(getClass().getResourceAsStream("obsIcon.png"));
-			imgTo = ImageIO.read(getClass().getResourceAsStream("to.jpg"));
-			imgFrom = ImageIO.read(getClass().getResourceAsStream("from.jpg"));
-			imgBad = ImageIO.read(getClass().getResourceAsStream("bad.jpg"));
+			imgTo = ImageIO.read(getClass().getResourceAsStream("to.png"));
+			imgFrom = ImageIO.read(getClass().getResourceAsStream("from.png"));
+			imgBad = ImageIO.read(getClass().getResourceAsStream("bad.png"));
 		}catch(Exception e){
 			
 		}
