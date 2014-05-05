@@ -15,6 +15,9 @@ public class Compass extends JPanel implements KeyListener {
 	double OBSDegrees;
 	double dirDegrees;
 	double needleDegrees;
+	double rad,h,w;
+	AffineTransform at = null;
+	AffineTransformOp op = null;
 	/**
 	 * Created global variable If we want to edit the images and place them back
 	 * into the graphics Then we can use a method to rerender the compass with
@@ -38,6 +41,8 @@ public class Compass extends JPanel implements KeyListener {
 	 */
 	BufferedImage needle = null;
 	
+	BufferedImage to, from, bad;
+	
 	/**************************************************************************** Constructor
 	 * 
 	 */
@@ -52,6 +57,23 @@ public class Compass extends JPanel implements KeyListener {
 		radio = vor.getRadio();
 		updateVariables();
 		addKeyListener(this);
+		
+		//set images
+		try{
+			compassImg = ImageIO.read(getClass().getResourceAsStream(
+					"Compass.png"));
+			direct = ImageIO.read(getClass().getResourceAsStream(
+					"Directions.png"));
+			needle = ImageIO.read(getClass().getResourceAsStream(
+					"Needle2.png"));
+			obsImg = ImageIO
+					.read(getClass().getResourceAsStream("obsIcon.png"));
+			to = ImageIO.read(getClass().getResourceAsStream("to.jpg"));
+			from = ImageIO.read(getClass().getResourceAsStream("from.jpg"));
+			bad = ImageIO.read(getClass().getResourceAsStream("bad.jpg"));
+		}catch(Exception e){
+			
+		}
 	}
 	/**************************************************************************** Setup Interface
 	 * 
@@ -69,27 +91,22 @@ public class Compass extends JPanel implements KeyListener {
 			final Graphics2D graphics = (Graphics2D)g.create();
 			//graphics = (Graphics2D) g;
 			
-			compassImg = ImageIO.read(getClass().getResourceAsStream(
-					"Compass.png"));
-
+			
+			//draws the stationary piece
 			graphics.drawImage(compassImg, 0, 0, this);
-			obsImg = ImageIO
-					.read(getClass().getResourceAsStream("obsIcon.png"));
-
-			double rad = Math.toRadians(OBSDegrees);
-			double w = obsImg.getWidth() / 2;
-			double h = obsImg.getHeight() / 2;
+			graphics.drawImage(to,0,0,this);
 			
-			
-			
-			AffineTransform at = AffineTransform.getRotateInstance(rad, w, h);
-			AffineTransformOp op = new AffineTransformOp(at,
+			//draws the obs
+			rad = Math.toRadians(OBSDegrees);
+			w = obsImg.getWidth() / 2;
+			h = obsImg.getHeight() / 2;
+			at = AffineTransform.getRotateInstance(rad, w, h);
+			op = new AffineTransformOp(at,
 					AffineTransformOp.TYPE_BILINEAR);
 			graphics.drawImage(op.filter(obsImg, null), 15, 400, this);
 
-			direct = ImageIO.read(getClass().getResourceAsStream(
-					"Directions.png"));
-
+			
+			//draws the radians
 			rad = Math.toRadians(dirDegrees);
 			w = direct.getWidth() / 2;
 			h = direct.getHeight() / 2;
@@ -97,20 +114,16 @@ public class Compass extends JPanel implements KeyListener {
 			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			graphics.drawImage(op.filter(direct, null), 0, 0, this);
 
-			needle = ImageIO.read(getClass().getResourceAsStream(
-					"Needle2.png"));
 			
+			//draws the needle
 			rad = Math.toRadians(needleDegrees);
-			//We need to rotate at the top pivot point
-			//UPDATE: We just used a larger needle picture to rotate
 			w = needle.getWidth()/2;
 			h = needle.getHeight()/2;
 			at = AffineTransform.getRotateInstance(rad, 255, 120);
-			int needlex = (compassImg.getWidth() / 2);
-			int needley = compassImg.getHeight() / 4;
 			op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-			
 			graphics.drawImage(op.filter(needle, null), 0, 0, this);
+			
+			
 			
 			setFocusable(true);
 			requestFocusInWindow();
