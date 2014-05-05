@@ -20,7 +20,7 @@ public class Compass extends JPanel implements KeyListener {
 	AffineTransformOp op = null;
 	final String sTo = "TO";
 	final String sFrom = "FROM";
-	final String sBad = "BAD";
+	final String sBad = "OFF";
 	String vorDirection = "";
 	/**
 	 * Created global variable If we want to edit the images and place them back
@@ -164,8 +164,9 @@ public class Compass extends JPanel implements KeyListener {
 		updateVariables();
 		
 		System.out.println("OBS currently set at : "+vor.getOBS()+ "; Radial currently set at : "+vor.getRadial() + " Signal Strength: " + vor.getSignal());
-
+		//if(vor.getSignalbool()){
 		repaint();
+		//}
 
 	}
 
@@ -206,15 +207,5 @@ public class Compass extends JPanel implements KeyListener {
 		rotateNeedle(vor.getNeedle());
 		vor.direction();
 	}
-
-	// move the picture to the side to see
-	
-	/*public static void main(String[] s){
-		JFrame f = new JFrame();
-		f.getContentPane().add(new Compass(new VOR(0, new SimulatedRadio(5, true))));
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.pack();
-		f.setVisible(true);
-	}*/
 
 }

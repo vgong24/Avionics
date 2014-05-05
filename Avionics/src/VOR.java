@@ -34,16 +34,16 @@ public class VOR {
 	 * Sets the direction of where the VOR is pointing to Gets degrees from the
 	 * OBS
 	 */
-	double obs;
-	boolean signal;
+	private double obs;
+	private boolean signal;
 	final private boolean GOOD = true;
 	final private boolean BAD = false;
 	/*
 	 * Where the object is relative to VOR
 	 */
-	String direction = "TO";
+	private String direction = "TO";
 	// radio
-	SimulatedRadio radio;
+	private SimulatedRadio radio;
 	double radial = 0;
 	//needle direction in degrees
 	double needle = 0;
@@ -104,6 +104,9 @@ public class VOR {
 	public String getSignal(){
 		return (signal) ? "GOOD" : "BAD";
 	}
+	public boolean getSignalbool(){
+		return signal;
+	}
 	
 	/************************************************************************* Mutators
 	 * 
@@ -148,11 +151,9 @@ public class VOR {
 	 */
 	/**
 	 * Checks whether the airplane radio is 'going to' or 'coming from' the VOR
-	 * returns 'true' if it is going to the VOR, 'false' if it is coming from
+	 * returns 'To' if it is going to the VOR, 'From' if it is coming from
 	 * the VOR
 	 */
-
-	// Edit direction method
 	public String direction(double obs, double radial) {
 		direction = "TO";
 		double obsLeft = mod(obs-90, 360);

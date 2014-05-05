@@ -206,7 +206,13 @@ public class SimulatedRadio {
 		return morseCode;	
 		
 	}
-	
+	/**
+	 * Takes in a String 
+	 * returns the String in morse code. 
+	 * String characters must be between a-z and contain exactly 3 letters
+	 * @param id
+	 * @return
+	 */
 	public String setStationID(String id){
 		String morseCode = "";
 		if(id.length() != 3){
