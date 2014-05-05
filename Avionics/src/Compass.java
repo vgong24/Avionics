@@ -18,6 +18,10 @@ public class Compass extends JPanel implements KeyListener {
 	double rad,h,w;
 	AffineTransform at = null;
 	AffineTransformOp op = null;
+	final String sTo = "TO";
+	final String sFrom = "FROM";
+	final String sBad = "BAD";
+	String vorDirection = "";
 	/**
 	 * Created global variable If we want to edit the images and place them back
 	 * into the graphics Then we can use a method to rerender the compass with
@@ -41,7 +45,7 @@ public class Compass extends JPanel implements KeyListener {
 	 */
 	BufferedImage needle = null;
 	
-	BufferedImage to, from, bad;
+	BufferedImage imgTo, imgFrom, imgBad;
 	
 	/**************************************************************************** Constructor
 	 * 
@@ -68,9 +72,9 @@ public class Compass extends JPanel implements KeyListener {
 					"Needle2.png"));
 			obsImg = ImageIO
 					.read(getClass().getResourceAsStream("obsIcon.png"));
-			to = ImageIO.read(getClass().getResourceAsStream("to.jpg"));
-			from = ImageIO.read(getClass().getResourceAsStream("from.jpg"));
-			bad = ImageIO.read(getClass().getResourceAsStream("bad.jpg"));
+			imgTo = ImageIO.read(getClass().getResourceAsStream("to.jpg"));
+			imgFrom = ImageIO.read(getClass().getResourceAsStream("from.jpg"));
+			imgBad = ImageIO.read(getClass().getResourceAsStream("bad.jpg"));
 		}catch(Exception e){
 			
 		}
@@ -94,7 +98,13 @@ public class Compass extends JPanel implements KeyListener {
 			
 			//draws the stationary piece
 			graphics.drawImage(compassImg, 0, 0, this);
-			graphics.drawImage(to,0,0,this);
+			vorDirection = vor.getDirection();
+			switch(vorDirection){
+			case sTo: graphics.drawImage(imgTo,0,0,this);break;
+			case sFrom: graphics.drawImage(imgFrom,0,0,this);break;
+			case sBad: graphics.drawImage(imgBad,0,0,this);break;
+			default: graphics.drawImage(imgBad,0,0,this);break;
+			}
 			
 			//draws the obs
 			rad = Math.toRadians(OBSDegrees);
