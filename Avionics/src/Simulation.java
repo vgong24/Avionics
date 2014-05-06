@@ -15,10 +15,27 @@ public class Simulation {
 		
 		
 		//Given an already-set input, the setStationID prints the morse code of the VOR station
-		String morseCode = radio.setStationID("h", "n", "l");
+      double random = Math.random();
+      random*=26;
+      random += 97;
+      char char1 = (char) random;
+      String string1 = "";
+      string1 += char1;
+      random = Math.random();
+      random*=26;
+      random += 97;
+      char char2 = (char) random;
+      String string2 = "";
+      string2 += char2;
+      random = Math.random();
+      random*=26;
+      random += 97;
+      char char3 = (char) random;
+      String string3 = "";
+      string3 += char3;
+		String morseCode = radio.setStationID(string1, string2, string3);
 		System.out.println("VOR Station ID: " + morseCode);
-		String test = radio.setStationID("abz");
-		System.out.println("test: "+ test);
+		
 		
 		Compass compass = new Compass(vor);
 		JFrame f = new JFrame();
